@@ -5,9 +5,9 @@ const App = { config: null, catalogo: [], favoritos: new Set(JSON.parse(localSto
 window.GN = App;
 
 const SILHUETAS = {
-  vestido: '<svg viewBox="0 0 100 140" fill="#5a2f41"><path d="M40 8c0-4 20-4 20 0l-2 14c6 4 8 10 6 18l-4 10c14 22 26 52 34 86H6c8-34 20-64 34-86l-4-10c-2-8 0-14 6-18z"/></svg>',
-  paleto: '<svg viewBox="0 0 100 140" fill="#5a2f41"><path d="M30 10l20 14 20-14 22 10 4 110H4L8 20zM50 24l-8 40 8 10 8-10z" /><path d="M46 26h8l-4 10z" fill="#e8d6b3"/></svg>',
-  acessorio: '<svg viewBox="0 0 100 100" fill="#5a2f41"><path d="M10 70l8-40 16 22 16-34 16 34 16-22 8 40z"/><rect x="10" y="74" width="80" height="10" rx="3"/></svg>'
+  vestido: '<svg viewBox="0 0 100 140" fill="#e7a9ba"><path d="M40 8c0-4 20-4 20 0l-2 14c6 4 8 10 6 18l-4 10c14 22 26 52 34 86H6c8-34 20-64 34-86l-4-10c-2-8 0-14 6-18z"/></svg>',
+  paleto: '<svg viewBox="0 0 100 140" fill="#e7a9ba"><path d="M30 10l20 14 20-14 22 10 4 110H4L8 20zM50 24l-8 40 8 10 8-10z" /><path d="M46 26h8l-4 10z" fill="#e8d6b3"/></svg>',
+  acessorio: '<svg viewBox="0 0 100 100" fill="#e7a9ba"><path d="M10 70l8-40 16 22 16-34 16 34 16-22 8 40z"/><rect x="10" y="74" width="80" height="10" rx="3"/></svg>'
 };
 const silhueta = cat => cat === 'Paletós' ? SILHUETAS.paleto : cat === 'Acessórios' ? SILHUETAS.acessorio : SILHUETAS.vestido;
 
@@ -205,7 +205,7 @@ function mostrarSucesso(ag) {
     <p>Código: <span class="cod">${ag.id}</span></p>
     <p>Para garantir, envie a confirmação no nosso WhatsApp:</p>
     <a class="btn btn-ouro" target="_blank" rel="noopener" href="${whatsLink(App.textoConfirmacao(ag))}">Confirmar pelo WhatsApp</a>
-    <p><button class="btn-texto" style="color:var(--vinho)" onclick="GN.baixarIcs(${esc(JSON.stringify(ag)).replace(/"/g, '&quot;')})">📅 Salvar na agenda do celular</button></p>
+    <p><button class="btn-texto" style="color:var(--ouro-texto)" onclick="GN.baixarIcs(${esc(JSON.stringify(ag)).replace(/"/g, '&quot;')})">📅 Salvar na agenda do celular</button></p>
     <p class="pequeno" style="margin-top:18px">Dica: traga uma lingerie cor da pele e o sapato com a altura que pretende usar.</p>`;
   s.scrollIntoView({ block: 'center' });
 }

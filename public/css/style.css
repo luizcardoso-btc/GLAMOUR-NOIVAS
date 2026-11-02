@@ -185,3 +185,98 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ouro);outline-of
 .lightbox button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;font-size:2rem;width:48px;height:48px;border-radius:50%;cursor:pointer}
 .lb-fechar{top:16px;right:16px}.lb-ant{left:12px;top:50%}.lb-prox{right:12px;top:50%}
 @media (max-width:860px){.hero{flex-direction:column;align-items:stretch}.hero-foto{flex:none;max-width:420px;width:100%;margin:0 auto}}
+
+/* =========================================================
+   TEMA ROSÊ BEBÊ · DOURADO · BRANCO
+   ========================================================= */
+:root{
+  --branco:#fff; --marfim:#fff; --creme:#fcedf1;
+  --rose:#f8dfe6; --rose-claro:#fdf3f6; --rose-forte:#eeb8c7; --rose-texto:#b0566f;
+  --ouro:#c9971c; --ouro-claro:#f4e2a8; --ouro-texto:#8c640a;
+  --ouro-grad:linear-gradient(135deg,#a8770f 0%,#d4a632 28%,#f7df8a 50%,#d4a632 72%,#a8770f 100%);
+  --vinho:#4a3a3e; --vinho-2:#8c640a; --texto:#3f3236; --suave:#7a6a6f;
+  --sombra:0 12px 34px rgba(176,86,111,.12);
+}
+body{background:#fff}
+h2 em,h1 em,.marca em{color:var(--ouro-texto);background:var(--ouro-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.topo{background:rgba(255,255,255,.94);border-bottom:1px solid var(--rose)}
+.topo::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ouro-grad);opacity:.8}
+
+/* botões dourados */
+.btn-ouro{background:var(--ouro-grad);background-size:200% 100%;color:#3a2905!important;box-shadow:0 6px 18px rgba(201,151,28,.35);border:0}
+.btn-ouro:hover{background:var(--ouro-grad);background-position:100% 0;filter:brightness(1.05);box-shadow:0 8px 24px rgba(201,151,28,.5)}
+.btn-linha{border-color:var(--ouro);color:var(--ouro-texto)}
+.btn-linha:hover{background:var(--rose-claro)}
+
+/* abertura */
+.hero{color:var(--texto);background:radial-gradient(ellipse at 80% 20%,#fff 0%,transparent 55%),linear-gradient(120deg,#fff 0%,var(--rose-claro) 40%,var(--rose) 100%)}
+.hero .lead{opacity:1;color:var(--suave)}
+.sobre{color:var(--rose-texto)}
+.selos{opacity:1;color:var(--suave)}
+.selos strong{color:var(--ouro-texto)}
+.hero-foto img{border:3px solid transparent;background:var(--ouro-grad) border-box;box-shadow:0 30px 60px rgba(176,86,111,.25)}
+
+/* seções */
+.secao-clara{background:var(--rose-claro)}
+.secao-escura{background:linear-gradient(160deg,var(--rose) 0%,var(--rose-claro) 100%);color:var(--texto)}
+.secao-escura .sub{color:var(--suave)}
+.servico{border-top:3px solid transparent;border-image:var(--ouro-grad) 1;box-shadow:var(--sombra)}
+
+/* catálogo */
+.filtros button{border-color:var(--rose-forte);color:var(--texto)}
+.filtros button[aria-selected=true]{background:var(--ouro-grad);border-color:transparent;color:#3a2905;font-weight:600}
+.peca .foto{background:linear-gradient(160deg,#fff,var(--rose))}
+.peca .foto svg{fill:var(--rose-forte)}
+.peca .meta{color:var(--rose-texto)}
+.peca .selo{background:var(--ouro-grad);color:#3a2905;font-weight:600}
+.peca .provar{color:var(--ouro-texto)}
+.galeria button{background:var(--rose)}
+
+/* agendamento (antes escuro, agora rosê com cartão branco) */
+.form-agendar{background:#fff;border:1px solid var(--rose-forte);box-shadow:var(--sombra)}
+label{color:var(--texto)}
+input,select,textarea{border:1px solid var(--rose-forte);background:#fff}
+.opcoes-tipo label{color:var(--texto);border-color:var(--rose-forte);background:var(--rose-claro)}
+.opcoes-tipo small{color:var(--suave)}
+.opcoes-tipo label:has(input:checked){background:#fff6dc;border-color:var(--ouro);box-shadow:0 0 0 1px var(--ouro)}
+.horarios button{border-color:var(--rose-forte);color:var(--texto);background:#fff}
+.horarios button.ativo{background:var(--ouro-grad);border-color:transparent;color:#3a2905;font-weight:600}
+.dica{color:var(--suave)}
+.erro{color:#b3261e}
+.sucesso{border:1px solid var(--rose-forte);box-shadow:var(--sombra)}
+.sucesso h3{color:var(--ouro-texto)}
+.sucesso .cod{background:var(--rose)}
+
+/* depoimentos, faq, jornada */
+.depoimentos blockquote{border-left:3px solid var(--ouro)}
+.depoimentos cite{color:var(--rose-texto)}
+.faq details{border-bottom-color:var(--rose)}
+.jornada span{border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ouro-grad) border-box;color:var(--ouro-texto)}
+.checks li::before{color:var(--ouro)}
+.cerimonial{background:linear-gradient(120deg,var(--rose-claro),#fff)}
+
+/* rodapé */
+.rodape{background:var(--rose);color:var(--texto);border-top:3px solid transparent;border-image:var(--ouro-grad) 1}
+.rodape .marca{color:var(--texto)}
+.rodape .pequeno{border-top-color:var(--rose-forte);opacity:.8}
+.rodape a{color:var(--texto)}
+
+/* assistente */
+.chat-abrir{background:#fff;color:var(--texto);border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--ouro-grad) border-box;box-shadow:0 10px 26px rgba(176,86,111,.3)}
+.chat-abrir .bolha{background:var(--ouro-grad)}
+.chat{background:var(--rose-claro)}
+.chat header{background:linear-gradient(120deg,var(--rose) 0%,var(--rose-forte) 100%);color:var(--texto);border-bottom:2px solid var(--ouro)}
+.chat header small{color:var(--rose-texto)}
+.chat header button{color:var(--texto)}
+.msg.eu{background:var(--ouro-grad);color:#3a2905}
+.msg a{color:var(--ouro-texto)}
+.chat-sugestoes button{border-color:var(--rose-forte);color:var(--texto)}
+.chat-sugestoes button:hover{border-color:var(--ouro);background:#fff6dc}
+.chat-form{border-top-color:var(--rose)}
+.chat-form button{color:var(--ouro)}
+
+/* consulta, lightbox, menu */
+.secao-clara .btn-linha{color:var(--ouro-texto);border-color:var(--ouro)}
+.lightbox{background:rgba(60,40,46,.92)}
+.lightbox p{color:var(--ouro-claro)}
+@media (max-width:860px){.menu{background:#fff;border-bottom:2px solid var(--rose)}}
