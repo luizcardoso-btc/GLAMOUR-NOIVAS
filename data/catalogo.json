@@ -11,8 +11,12 @@
     "imagem": "img/vestidos/perola-1-card.webp",
     "fotos": [
       "img/vestidos/perola-1.webp",
+      "img/vestidos/perola-3.webp",
+      "img/vestidos/perola-7.webp",
+      "img/vestidos/perola-5.webp",
+      "img/vestidos/perola-4.webp",
       "img/vestidos/perola-2.webp",
-      "img/vestidos/perola-3.webp"
+      "img/vestidos/perola-6.webp"
     ],
     "destaque": true,
     "ativo": true
@@ -28,7 +32,8 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "img/vestidos/majestade-1-card.webp",
     "fotos": [
-      "img/vestidos/majestade-1.webp"
+      "img/vestidos/majestade-1.webp",
+      "img/vestidos/majestade-2.webp"
     ],
     "destaque": true,
     "ativo": true
@@ -44,7 +49,26 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "img/vestidos/renda-imperial-1-card.webp",
     "fotos": [
-      "img/vestidos/renda-imperial-1.webp"
+      "img/vestidos/renda-imperial-1.webp",
+      "img/vestidos/renda-imperial-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-rose-encanto",
+    "nome": "Rosé Encanto",
+    "categoria": "Noivas",
+    "estilo": "Rosé bordado · civil e pré-wedding",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white com bordado rosê",
+    "descricao": "Tule bordado com ramos florais em rosê e fios dourados sobre forro off-white, alças finas com acabamento perolado e barra recortada. Delicado para casamento civil, pré-wedding ou debutante.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/rose-encanto-1-card.webp",
+    "fotos": [
+      "img/vestidos/rose-encanto-1.webp",
+      "img/vestidos/rose-encanto-2.webp",
+      "img/vestidos/rose-encanto-3.webp"
     ],
     "destaque": true,
     "ativo": true

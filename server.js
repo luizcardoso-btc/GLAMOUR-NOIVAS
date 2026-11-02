@@ -27,9 +27,17 @@ if (DATA !== SEED) {
     const atual = JSON.parse(fs.readFileSync(path.join(DATA, 'catalogo.json'), 'utf8'));
     const ids = new Set(atual.map(i => i.id));
     const novos = seed.filter(i => !ids.has(i.id));
-    if (novos.length) {
+    // fotos novas de peças que já existem também entram (sem apagar as que foram colocadas pelo painel)
+    let fotosNovas = 0;
+    for (const sd of seed) {
+      const it = atual.find(i => i.id === sd.id);
+      if (!it || !Array.isArray(sd.fotos)) continue;
+      const faltam = sd.fotos.filter(f => !(it.fotos || []).includes(f));
+      if (faltam.length) { it.fotos = [...(it.fotos || []), ...faltam]; fotosNovas += faltam.length; }
+    }
+    if (novos.length || fotosNovas) {
       fs.writeFileSync(path.join(DATA, 'catalogo.json'), JSON.stringify([...novos, ...atual], null, 2));
-      console.log(`${novos.length} peça(s) nova(s) adicionadas ao catálogo`);
+      console.log(`Catálogo: ${novos.length} peça(s) e ${fotosNovas} foto(s) novas`);
     }
   } catch (e) { console.error('Falha ao mesclar catálogo', e.message); }
 }
