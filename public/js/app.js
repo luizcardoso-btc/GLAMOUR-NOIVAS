@@ -102,6 +102,12 @@ function montarGaleria() {
   const sec = $('#galeria');
   if (!fotos.length) { sec.hidden = true; return; }
   $('#galeria-fotos').innerHTML = fotos.map((x, n) => `<button data-n="${n}" aria-label="Ampliar foto do vestido ${esc(x.nome)}"><img src="${esc(x.f)}" alt="Vestido ${esc(x.nome)}" loading="lazy"></button>`).join('');
+  const LIM = 10;
+  if (fotos.length > LIM) {
+    $('#galeria-fotos').classList.add('recolhida');
+    $('#galeria-fotos').insertAdjacentHTML('afterend', `<p style="text-align:center;margin-top:22px"><button class="btn btn-linha" id="ver-mais-fotos">Ver mais fotos (${fotos.length - LIM})</button></p>`);
+    $('#ver-mais-fotos').onclick = e => { $('#galeria-fotos').classList.remove('recolhida'); e.target.parentElement.remove(); };
+  }
   $('#galeria-fotos').addEventListener('click', e => { const b = e.target.closest('button'); if (b) abrirLightbox(fotos.map(x => x.f), +b.dataset.n, null, fotos.map(x => x.nome)); });
 }
 let lb = { lista: [], n: 0, nomes: [] };

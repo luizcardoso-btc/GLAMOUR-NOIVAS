@@ -75,6 +75,139 @@
     "ativo": true
   },
   {
+    "id": "real-catedral",
+    "nome": "Catedral",
+    "categoria": "Noivas",
+    "estilo": "Clássico com véu catedral",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpo em renda com decote V e mangas, saia fluida de tule e véu catedral longo com aplicações de renda. Elegância para cerimônia na igreja.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/catedral-1-card.webp",
+    "fotos": [
+      "img/vestidos/catedral-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-cinderela",
+    "nome": "Cinderela",
+    "categoria": "Noivas",
+    "estilo": "Princesa tomara que caia",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Corpete tomara que caia com pedrarias e saia de tule volumosa com brilho. Um clássico de princesa.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/cinderela-1-card.webp",
+    "fotos": [
+      "img/vestidos/cinderela-1.webp",
+      "img/vestidos/cinderela-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-luz",
+    "nome": "Luz",
+    "categoria": "Noivas",
+    "estilo": "Ombro a ombro em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Decote ombro a ombro em renda delicada e saia fluida em tule. Leve e romântico, combina com véu longo.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/luz-1-card.webp",
+    "fotos": [
+      "img/vestidos/luz-1.webp",
+      "img/vestidos/luz-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-graca",
+    "nome": "Graça",
+    "categoria": "Noivas",
+    "estilo": "Sereia em renda com cauda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Totalmente em renda, mangas curtinhas, decote canoa e cauda longa rendada. Valoriza todas as silhuetas.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/graca-1-card.webp",
+    "fotos": [
+      "img/vestidos/graca-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-charme",
+    "nome": "Charme",
+    "categoria": "Noivas",
+    "estilo": "Renda com mangas · plus size",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Renda guipir com mangas transparentes rendadas e decote V nas costas. Modelagem confortável para noivas plus size.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/charme-1-card.webp",
+    "fotos": [
+      "img/vestidos/charme-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-jardim",
+    "nome": "Jardim de Renda",
+    "categoria": "Noivas",
+    "estilo": "Princesa leve",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpete em renda floral com manguinhas, saia de tule com aplicações descendo pela saia. Perfeito para casamento ao ar livre.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/jardim-1-card.webp",
+    "fotos": [
+      "img/vestidos/jardim-1.webp",
+      "img/vestidos/jardim-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-lavanda",
+    "nome": "Lavanda",
+    "categoria": "15 Anos",
+    "estilo": "Baile com babados",
+    "tamanhos": "Consulte na loja",
+    "cor": "Lilás",
+    "descricao": "Corpete drapeado com flores 3D e pedrarias, mangas caídas rendadas e saia de organza em babados. Pode ser usado longo ou na versão curta.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/lavanda-2-card.webp",
+    "fotos": [
+      "img/vestidos/lavanda-2.webp",
+      "img/vestidos/lavanda-1.webp",
+      "img/vestidos/lavanda-3.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-ceu",
+    "nome": "Céu",
+    "categoria": "15 Anos",
+    "estilo": "Princesa azul",
+    "tamanhos": "Consulte na loja",
+    "cor": "Azul serenity",
+    "descricao": "Corpo em renda com decote ombro a ombro e saia longa fluida em azul claro. Delicado para debutante ou troca de look.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/luz-3-card.webp",
+    "fotos": [
+      "img/vestidos/luz-3.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
     "id": "n01",
     "nome": "Aurora",
     "categoria": "Noivas",
@@ -163,7 +296,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "d02",
@@ -176,7 +309,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "d03",
@@ -189,7 +322,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "d04",
@@ -202,7 +335,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "p01",
