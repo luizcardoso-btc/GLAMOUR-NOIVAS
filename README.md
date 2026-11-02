@@ -4,7 +4,16 @@ Site da Glamour Noivas (Rio Branco – AC) com:
 - Catálogo com filtros e favoritos
 - Agendamento online 24h com controle de vagas por horário
 - Assistente virtual "Gabi", gratuita, que responde dúvidas e agenda pela conversa
-- Painel da loja em `/admin`
+- Consulta, cancelamento e "salvar na agenda do celular" pela própria cliente
+- Painel da loja em `/admin`: agenda, lembretes de amanhã, contratos fechados, taxa de fechamento, catálogo, folgas e perguntas que a assistente não soube responder. Pode ser instalado no celular como aplicativo.
+
+## Telas
+
+| Site | Assistente / Cliente | Painel |
+|---|---|---|
+| ![](prints/01-inicio.png) | ![](prints/07-assistente.png) | ![](prints/11-painel-agenda.png) |
+| ![](prints/03-catalogo.png) | ![](prints/06-meu-agendamento.png) | ![](prints/12-painel-gabi.png) |
+| ![](prints/05-agendamento.png) | ![](prints/08-celular.png) | ![](prints/15-painel-celular.png) |
 
 Não depende de nenhuma biblioteca externa. Só precisa do **Node.js 18 ou mais novo**.
 
@@ -51,4 +60,4 @@ public/js/chat.js    assistente virtual
 public/js/app.js     catálogo e agendamento
 ```
 
-Veja **PLANO-ESTRATEGICO.md** para o plano de crescimento da loja.
+Veja **PLANO-ESTRATEGICO.md** (plano de crescimento) e **docs/KIT-EXECUCAO.md** (bio, WhatsApp, Google e calendário de posts prontos).
