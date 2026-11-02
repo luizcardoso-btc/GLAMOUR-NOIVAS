@@ -122,12 +122,24 @@
   <div id="ag-sucesso" class="sucesso" hidden></div>
 </section>
 
-<section class="secao secao-clara">
+
+<section id="meu-agendamento" class="secao secao-clara meu-ag">
+  <h2>Já agendou?</h2>
+  <p class="sub">Consulte, adicione à sua agenda ou cancele seu horário. Assim liberamos a vaga para outra noiva. 💕</p>
+  <form id="form-consulta" class="form-consulta">
+    <input id="mc-id" placeholder="Código (ex.: 1C629445)" maxlength="12" required>
+    <input id="mc-tel" type="tel" inputmode="tel" placeholder="Seu WhatsApp" required>
+    <button class="btn btn-ouro">Consultar</button>
+  </form>
+  <div id="mc-resultado" class="mc-resultado" aria-live="polite"></div>
+</section>
+
+<section class="secao">
   <h2>Quem viveu, recomenda</h2>
   <div class="depoimentos" id="depoimentos"></div>
 </section>
 
-<section id="faq" class="secao">
+<section id="faq" class="secao secao-clara">
   <h2>Dúvidas frequentes</h2>
   <div class="faq" id="lista-faq"></div>
 </section>

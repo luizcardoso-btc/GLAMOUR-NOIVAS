@@ -173,8 +173,50 @@ function mostrarSucesso(ag) {
     <p>Código: <span class="cod">${ag.id}</span></p>
     <p>Para garantir, envie a confirmação no nosso WhatsApp:</p>
     <a class="btn btn-ouro" target="_blank" rel="noopener" href="${whatsLink(App.textoConfirmacao(ag))}">Confirmar pelo WhatsApp</a>
+    <p><button class="btn-texto" style="color:var(--vinho)" onclick="GN.baixarIcs(${esc(JSON.stringify(ag)).replace(/"/g, '&quot;')})">📅 Salvar na agenda do celular</button></p>
     <p class="pequeno" style="margin-top:18px">Dica: traga uma lingerie cor da pele e o sapato com a altura que pretende usar.</p>`;
   s.scrollIntoView({ block: 'center' });
 }
+
+// ---------- arquivo de agenda (.ics): funciona no Google Agenda, iPhone e Outlook ----------
+App.baixarIcs = ag => {
+  const tipo = App.config.tiposAtendimento.find(t => t.id === ag.tipo)?.nome || 'Atendimento';
+  const ini = ag.data.replace(/-/g, '') + 'T' + ag.hora.replace(':', '') + '00';
+  const [h, m] = ag.hora.split(':').map(Number); const fimMin = h * 60 + m + 60;
+  const fim = ag.data.replace(/-/g, '') + 'T' + String(Math.floor(fimMin / 60)).padStart(2, '0') + String(fimMin % 60).padStart(2, '0') + '00';
+  const l = App.config.loja;
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Glamour Noivas//PT', 'BEGIN:VEVENT', `UID:${ag.id}@glamournoivas`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`,
+    `DTSTART;TZID=America/Rio_Branco:${ini}`, `DTEND;TZID=America/Rio_Branco:${fim}`,
+    `SUMMARY:${l.nome} – ${tipo}`, `LOCATION:${l.endereco.replace(/,/g, '\\,')}`,
+    `DESCRIPTION:Código ${ag.id}. Leve lingerie cor da pele e o sapato do evento.`,
+    'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:Amanhã: visita na Glamour Noivas', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'glamour-noivas.ics'; a.click();
+};
+
+// ---------- consulta / cancelamento pela cliente ----------
+const STATUS_TXT = { pendente: 'Aguardando confirmação', confirmado: 'Confirmado ✅', concluido: 'Visita realizada', fechou: 'Contrato fechado 💍', cancelado: 'Cancelado', faltou: 'Não compareceu' };
+async function consultar(acao) {
+  const body = { id: $('#mc-id').value.trim(), telefone: $('#mc-tel').value, acao };
+  const r = await fetch('/api/meu-agendamento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const ag = await r.json(); const out = $('#mc-resultado');
+  if (!r.ok) { out.innerHTML = `<p class="erro" style="color:#a33">${esc(ag.erro)}</p>`; return; }
+  const tipo = App.config.tiposAtendimento.find(t => t.id === ag.tipo)?.nome || ag.tipo;
+  const futuro = ag.data >= hojeAcre() && ag.status !== 'cancelado';
+  out.innerHTML = `<div class="mc-card"><h3>${esc(ag.nome.split(' ')[0])}, ${acao === 'cancelar' ? 'seu horário foi cancelado.' : 'aqui está seu agendamento'}</h3>
+    <p><strong>${ag.data.split('-').reverse().join('/')} às ${ag.hora}</strong><br>${esc(tipo)}<br>Status: ${STATUS_TXT[ag.status] || ag.status}</p>
+    ${futuro ? `<div class="acoes"><button class="btn btn-ouro" id="mc-ics">📅 Salvar na agenda</button>
+      <a class="btn btn-linha" target="_blank" rel="noopener" href="${whatsLink(`Olá! Quero remarcar meu agendamento ${ag.id}.`)}">Remarcar</a></div>
+      <p><button class="btn-texto" id="mc-cancelar">Cancelar este horário</button></p>` :
+      acao === 'cancelar' ? `<p><a class="btn btn-ouro" href="#agendar">Escolher novo horário</a></p>` : ''}</div>`;
+  $('#mc-ics')?.addEventListener('click', () => App.baixarIcs(ag));
+  $('#mc-cancelar')?.addEventListener('click', () => { if (confirm('Tem certeza que deseja cancelar? O horário será liberado.')) consultar('cancelar'); });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  $('#form-consulta')?.addEventListener('submit', e => { e.preventDefault(); consultar(); });
+  const q = new URLSearchParams(location.search); if (q.get('codigo')) { $('#mc-id').value = q.get('codigo'); $('#meu-agendamento').scrollIntoView(); }
+});
 
 init().catch(err => console.error('Falha ao carregar', err));

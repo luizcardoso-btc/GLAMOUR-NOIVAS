@@ -2,3 +2,4 @@ node_modules/
 *.tmp
 .env
 data/agendamentos.json
+data/perguntas.json

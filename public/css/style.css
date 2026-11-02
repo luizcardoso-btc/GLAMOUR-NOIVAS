@@ -155,3 +155,12 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ouro);outline-of
   .chat-abrir{padding:8px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* meu agendamento */
+.form-consulta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:640px;margin:0 auto}
+.form-consulta input{flex:1 1 200px;border:1px solid #d9cbb6}
+.mc-resultado{max-width:520px;margin:20px auto 0;text-align:center}
+.mc-card{background:var(--branco);border-radius:var(--raio);padding:24px;box-shadow:var(--sombra)}
+.mc-card .acoes{justify-content:center;margin:16px 0 0}
+.btn-texto{background:none;border:0;color:#a33;text-decoration:underline;cursor:pointer;font-family:var(--sans)}
+.secao-clara .btn-linha{color:var(--vinho);border-color:var(--ouro)}

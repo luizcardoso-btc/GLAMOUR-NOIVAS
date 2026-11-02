@@ -25,12 +25,12 @@ function save(name, value) {
 // ---------- utilidades ----------
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon' };
+  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json' };
 
 function send(res, status, body, headers = {}) {
   const isObj = typeof body === 'object' && !Buffer.isBuffer(body);
   res.writeHead(status, { 'Content-Type': isObj ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8', ...headers });
-  res.end(isObj ? JSON.stringify(body) : body);
+  res.end(status === 204 ? undefined : isObj ? JSON.stringify(body) : body);
 }
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -122,6 +122,36 @@ async function api(req, res, url) {
     return send(res, 201, ag);
   }
 
+  // ---- cliente consulta/cancela o próprio agendamento (código + WhatsApp) ----
+  if (p === '/api/meu-agendamento' && m === 'POST') {
+    const b = await readBody(req);
+    const id = clean(b.id, 12).toUpperCase(), tel = clean(b.telefone, 20).replace(/\D/g, '');
+    const all = load('agendamentos.json', []);
+    const ag = all.find(a => a.id === id && tel.length >= 8 && a.telefone.endsWith(tel.slice(-8)));
+    if (!ag) return send(res, 404, { erro: 'Não encontramos esse agendamento. Confira o código e o WhatsApp.' });
+    if (b.acao === 'cancelar') {
+      if (ag.data < todayISO()) return send(res, 400, { erro: 'Esse agendamento já passou.' });
+      if (ag.status === 'cancelado') return send(res, 400, { erro: 'Esse agendamento já estava cancelado.' });
+      ag.status = 'cancelado'; ag.canceladoPelaCliente = true; ag.atualizadoEm = new Date().toISOString();
+      save('agendamentos.json', all);
+      console.log(`[cancelamento] ${ag.id} pela cliente`);
+    }
+    const { id: i, nome, tipo, data, hora, status } = ag;
+    return send(res, 200, { id: i, nome, tipo, data, hora, status });
+  }
+
+  // ---- perguntas que a assistente não soube responder (para melhorar o FAQ) ----
+  if (p === '/api/perguntas' && m === 'POST') {
+    const { texto } = await readBody(req);
+    const t = clean(texto, 300);
+    if (t.length >= 3) {
+      const all = load('perguntas.json', []);
+      all.push({ texto: t, em: new Date().toISOString() });
+      save('perguntas.json', all.slice(-1000));
+    }
+    return send(res, 204, '');
+  }
+
   // ---- painel ----
   if (p === '/api/admin/login' && m === 'POST') {
     const ip = req.socket.remoteAddress;
@@ -147,7 +177,7 @@ async function api(req, res, url) {
   const mStatus = p.match(/^\/api\/admin\/agendamentos\/([A-F0-9]+)$/);
   if (mStatus && m === 'PATCH') {
     const { status } = await readBody(req);
-    if (!['pendente', 'confirmado', 'concluido', 'cancelado', 'faltou'].includes(status)) return send(res, 400, { erro: 'Status inválido' });
+    if (!['pendente', 'confirmado', 'concluido', 'fechou', 'cancelado', 'faltou'].includes(status)) return send(res, 400, { erro: 'Status inválido' });
     const all = load('agendamentos.json', []);
     const item = all.find(a => a.id === mStatus[1]);
     if (!item) return send(res, 404, { erro: 'Não encontrado' });
@@ -161,6 +191,8 @@ async function api(req, res, url) {
     const csv = [cols.join(';'), ...all.map(a => cols.map(c => `"${String(a[c] ?? '').replace(/"/g, '""')}"`).join(';'))].join('\n');
     return send(res, 200, '﻿' + csv, { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="agendamentos.csv"' });
   }
+  if (p === '/api/admin/perguntas' && m === 'GET') return send(res, 200, load('perguntas.json', []).slice().reverse());
+  if (p === '/api/admin/perguntas' && m === 'DELETE') { save('perguntas.json', []); return send(res, 200, { ok: true }); }
   if (p === '/api/admin/catalogo' && m === 'GET') return send(res, 200, load('catalogo.json', []));
   if (p === '/api/admin/catalogo' && m === 'POST') {
     const b = await readBody(req);

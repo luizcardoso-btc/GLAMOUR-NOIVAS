@@ -163,6 +163,10 @@
 
     if (/agend|marcar|horario disponivel|visita|provar|prova|reserv|atendimento com hora/.test(t) && !/horario de funcionamento/.test(t))
       return iniciarAgendamento(/agendar visita/.test(t) ? null : detectarTipo(t));
+    if (/cancelar|desmarcar|remarcar|mudar meu horario|meu agendamento|ja agendei/.test(t)) {
+      document.querySelector('#meu-agendamento').scrollIntoView();
+      return bot('Sem problemas! Na seção "Já agendou?" (abri para você) é só informar o código que recebeu e seu WhatsApp. Lá você consulta, cancela ou pede para remarcar. 😊', ['📅 Agendar visita', '👩 Falar com atendente']);
+    }
     if (/atendente|humano|pessoa|whats|falar com|ligar|telefone|contato/.test(t)) {
       const aviso = lojaAberta() ? 'Nossa equipe está online agora!' : 'Estamos fora do horário agora, mas sua mensagem fica registrada e respondemos assim que abrirmos. 🌙';
       return bot(`${aviso}\n\nFale direto com a gente: ${GN.whatsLink('Olá! Vim pelo site e gostaria de falar com uma atendente.')}`);
@@ -181,6 +185,7 @@
     if (melhor) return bot(GN.preencher(melhor.resposta), ['📅 Agendar visita', '👩 Falar com atendente', '❓ Outra dúvida']);
     if (/outra duvida/.test(t)) return bot('Claro! Pode perguntar à vontade: valores, prazos, ajustes, acessórios, cerimonial…');
 
+    fetch('/api/perguntas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ texto: txt }) }).catch(() => {});
     bot(`Ainda estou aprendendo e não entendi muito bem 😅 Posso te ajudar com estes assuntos, ou você pode falar com nossa equipe: ${GN.whatsLink('Olá! Tenho uma dúvida: ' + txt)}`);
   }
 
