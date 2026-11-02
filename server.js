@@ -12,7 +12,9 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'glamour2026';
 // No Railway, monte um volume e defina DATA_DIR=/data para nada se perder a cada publicação.
 const SEED = path.join(__dirname, 'data');
 const STARTED = new Date().toISOString();
-const DATA = process.env.DATA_DIR || process.env.RAILWAY_VOLUME_MOUNT_PATH || SEED;
+// O Railway informa sozinho onde o volume está montado; isso tem prioridade sobre DATA_DIR.
+const VOLUME = process.env.RAILWAY_VOLUME_MOUNT_PATH || '';
+const DATA = VOLUME || process.env.DATA_DIR || SEED;
 fs.mkdirSync(DATA, { recursive: true });
 if (DATA !== SEED && !fs.existsSync(path.join(DATA, 'catalogo.json'))) {
   fs.copyFileSync(path.join(SEED, 'catalogo.json'), path.join(DATA, 'catalogo.json'));
@@ -102,7 +104,7 @@ async function api(req, res, url) {
   const p = url.pathname;
   const m = req.method;
 
-  if (p === '/api/health') return send(res, 200, { ok: true, dadosPermanentes: DATA !== SEED, iniciadoEm: STARTED });
+  if (p === '/api/health') return send(res, 200, { ok: true, volumeRailway: VOLUME || null, pastaDados: DATA, dadosPermanentes: !!VOLUME || (!process.env.RAILWAY_ENVIRONMENT && DATA !== SEED), iniciadoEm: STARTED });
   if (p === '/api/config' && m === 'GET') {
     const cfg = config();
     return send(res, 200, { loja: cfg.loja, servicos: cfg.servicos, faq: cfg.faq, tiposAtendimento: cfg.tiposAtendimento, depoimentos: cfg.depoimentos });
