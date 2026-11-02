@@ -6,6 +6,7 @@
 <title>Glamour Noivas | Vestidos de Noiva, 15 Anos e Cerimonial em Rio Branco – AC</title>
 <meta name="description" content="Há mais de 20 anos em Rio Branco: vestidos de noiva e de 15 anos, paletós adulto e infantil, acessórios e cerimonial. Agende sua visita online, 24 horas.">
 <meta property="og:title" content="Glamour Noivas – Rio Branco, AC">
+<meta property="og:image" content="img/vestidos/perola-1.webp">
 <meta property="og:description" content="Vestidos de noiva, 15 anos, paletós e cerimonial. Agende sua prova online.">
 <meta name="theme-color" content="#3b1f2b">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -24,6 +25,7 @@
   <nav class="menu">
     <a href="#servicos">Serviços</a>
     <a href="#catalogo">Catálogo</a>
+    <a href="#galeria">Galeria</a>
     <a href="#cerimonial">Cerimonial</a>
     <a href="#jornada">Como funciona</a>
     <a href="#faq">Dúvidas</a>
@@ -47,6 +49,7 @@
       <li><strong>24h</strong> agendamento online</li>
     </ul>
   </div>
+  <figure class="hero-foto"><img src="img/vestidos/perola-3.webp" alt="Noiva com o vestido Pérola na escadaria da Glamour Noivas" fetchpriority="high"></figure>
 </section>
 
 <section id="servicos" class="secao">
@@ -60,6 +63,12 @@
   <div class="filtros" id="filtros" role="tablist"></div>
   <div class="grade-catalogo" id="grade-catalogo"></div>
   <p class="sub pequeno">O acervo completo, com centenas de peças, está na loja. As fotos são ilustrativas.</p>
+</section>
+
+<section id="galeria" class="secao">
+  <h2>Momentos <em>Glamour</em></h2>
+  <p class="sub">Vestidos do nosso acervo, fotografados na loja. Toque para ampliar.</p>
+  <div class="galeria" id="galeria-fotos"></div>
 </section>
 
 <section id="cerimonial" class="secao cerimonial">
@@ -170,6 +179,13 @@
   <form class="chat-form" id="chat-form"><input id="chat-input" placeholder="Digite sua mensagem…" autocomplete="off" maxlength="300"><button aria-label="Enviar">➤</button></form>
 </section>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Foto ampliada">
+  <button class="lb-fechar" aria-label="Fechar">×</button>
+  <button class="lb-ant" aria-label="Foto anterior">‹</button>
+  <img id="lb-img" alt="">
+  <button class="lb-prox" aria-label="Próxima foto">›</button>
+  <p id="lb-legenda"></p>
+</div>
 <script src="js/app.js"></script>
 <script src="js/chat.js"></script>
 </body>

@@ -32,6 +32,7 @@ async function init() {
   $('#ano').textContent = new Date().getFullYear();
 
   montarCatalogo();
+  montarGaleria();
   montarAgendamento();
 }
 
@@ -55,6 +56,8 @@ function montarCatalogo() {
       fav.textContent = App.favoritos.has(id) ? '❤️' : '🤍';
       atualizarResumoFavs();
     }
+    const zoom = e.target.closest('[data-zoom]');
+    if (zoom) { const it = App.catalogo.find(x => x.id === zoom.dataset.zoom); abrirLightbox((it.fotos && it.fotos.length) ? it.fotos : [it.imagem], 0, it.nome); }
     const provar = e.target.closest('.provar');
     if (provar) {
       App.favoritos.add(provar.dataset.id);
@@ -75,8 +78,9 @@ function renderCatalogo(cat) {
   itens = [...itens].sort((a, b) => b.destaque - a.destaque);
   $('#grade-catalogo').innerHTML = itens.length ? itens.map(i => `
     <article class="peca">
-      <div class="foto">${i.imagem ? `<img src="${esc(i.imagem)}" alt="${esc(i.nome)}" loading="lazy">` : silhueta(i.categoria)}</div>
+      <div class="foto">${i.imagem ? `<img src="${esc(i.imagem)}" alt="Vestido ${esc(i.nome)}" loading="lazy" data-zoom="${esc(i.id)}">` : silhueta(i.categoria)}</div>
       ${i.destaque ? '<span class="selo">DESTAQUE</span>' : ''}
+      ${(i.fotos || []).length > 1 ? `<span class="nfotos">📷 ${i.fotos.length} fotos</span>` : ''}
       <button class="fav" data-id="${esc(i.id)}" aria-label="Favoritar ${esc(i.nome)}">${App.favoritos.has(i.id) ? '❤️' : '🤍'}</button>
       <div class="info">
         <h3>${esc(i.nome)}</h3>
@@ -91,6 +95,34 @@ function atualizarResumoFavs() {
   const nomes = App.catalogo.filter(i => App.favoritos.has(i.id)).map(i => i.nome);
   $('#fav-resumo').textContent = nomes.length ? `❤️ Seus favoritos irão no agendamento: ${nomes.join(', ')}` : '';
 }
+
+// ---------- galeria e fotos ampliadas ----------
+function montarGaleria() {
+  const fotos = App.catalogo.flatMap(i => (i.fotos || []).map(f => ({ f, nome: i.nome })));
+  const sec = $('#galeria');
+  if (!fotos.length) { sec.hidden = true; return; }
+  $('#galeria-fotos').innerHTML = fotos.map((x, n) => `<button data-n="${n}" aria-label="Ampliar foto do vestido ${esc(x.nome)}"><img src="${esc(x.f)}" alt="Vestido ${esc(x.nome)}" loading="lazy"></button>`).join('');
+  $('#galeria-fotos').addEventListener('click', e => { const b = e.target.closest('button'); if (b) abrirLightbox(fotos.map(x => x.f), +b.dataset.n, null, fotos.map(x => x.nome)); });
+}
+let lb = { lista: [], n: 0, nomes: [] };
+function abrirLightbox(lista, n, nome, nomes) {
+  lb = { lista, n, nomes: nomes || lista.map(() => nome) };
+  mostrarLb(); $('#lightbox').hidden = false; document.body.style.overflow = 'hidden';
+}
+function mostrarLb() {
+  $('#lb-img').src = lb.lista[lb.n]; $('#lb-img').alt = 'Vestido ' + (lb.nomes[lb.n] || '');
+  $('#lb-legenda').textContent = `${lb.nomes[lb.n] || ''}${lb.lista.length > 1 ? ` · ${lb.n + 1}/${lb.lista.length}` : ''}`;
+  $('.lb-ant').hidden = $('.lb-prox').hidden = lb.lista.length < 2;
+}
+function fecharLb() { $('#lightbox').hidden = true; document.body.style.overflow = ''; }
+document.addEventListener('DOMContentLoaded', () => {
+  $('.lb-fechar').onclick = fecharLb;
+  $('.lb-ant').onclick = () => { lb.n = (lb.n - 1 + lb.lista.length) % lb.lista.length; mostrarLb(); };
+  $('.lb-prox').onclick = () => { lb.n = (lb.n + 1) % lb.lista.length; mostrarLb(); };
+  $('#lightbox').onclick = e => { if (e.target.id === 'lightbox') fecharLb(); };
+  document.addEventListener('keydown', e => { if ($('#lightbox').hidden) return;
+    if (e.key === 'Escape') fecharLb(); if (e.key === 'ArrowLeft') $('.lb-ant').click(); if (e.key === 'ArrowRight') $('.lb-prox').click(); });
+});
 
 // ---------- agendamento ----------
 let horaEscolhida = null;

@@ -1,5 +1,55 @@
 [
   {
+    "id": "real-perola",
+    "nome": "Pérola",
+    "categoria": "Noivas",
+    "estilo": "Evasê com cauda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Cetim encorpado com bordado de pérolas e canutilhos descendo pela saia, decote coração e alças duplas de pérolas caídas no ombro. Cauda elegante.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/perola-1-card.webp",
+    "fotos": [
+      "img/vestidos/perola-1.webp",
+      "img/vestidos/perola-2.webp",
+      "img/vestidos/perola-3.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-majestade",
+    "nome": "Majestade",
+    "categoria": "Noivas",
+    "estilo": "Princesa",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Costas em tule transparente totalmente bordadas com pérolas e botões forrados, mangas longas e saia de organza volumosa com cauda longa. Entrada de princesa.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/majestade-1-card.webp",
+    "fotos": [
+      "img/vestidos/majestade-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-renda-imperial",
+    "nome": "Renda Imperial",
+    "categoria": "Noivas",
+    "estilo": "Princesa em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Renda guipir aplicada sobre tule, mangas longas transparentes, decote ilusion e cauda com barrado de renda recortada.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/renda-imperial-1-card.webp",
+    "fotos": [
+      "img/vestidos/renda-imperial-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
     "id": "n01",
     "nome": "Aurora",
     "categoria": "Noivas",
@@ -10,7 +60,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "n02",
@@ -23,7 +73,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "n03",
@@ -36,7 +86,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "n04",
@@ -49,7 +99,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "n05",
@@ -62,7 +112,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "n06",
@@ -75,7 +125,7 @@
     "modalidade": "Aluguel ou venda",
     "imagem": "",
     "destaque": false,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "d01",

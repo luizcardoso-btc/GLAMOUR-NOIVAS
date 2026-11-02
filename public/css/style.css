@@ -165,3 +165,23 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ouro);outline-of
 .btn-texto{background:none;border:0;color:#a33;text-decoration:underline;cursor:pointer;font-family:var(--sans)}
 .secao-clara .btn-linha{color:var(--vinho);border-color:var(--ouro)}
 #rod-contatos{display:flex;flex-direction:column;gap:8px}
+
+/* fotos reais */
+.hero{gap:clamp(24px,5vw,72px);background:linear-gradient(120deg,#2a141e 0%,var(--vinho) 55%,#6b3a4e 100%)}
+.hero-txt{flex:1 1 0}
+.hero-foto{flex:0 1 420px;margin:0;align-self:stretch;display:flex;align-items:center}
+.hero-foto img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:220px 220px 18px 18px;box-shadow:0 30px 60px rgba(0,0,0,.35);border:1px solid rgba(232,214,179,.35)}
+.peca .foto img{cursor:zoom-in;transition:transform .5s}
+.peca:hover .foto img{transform:scale(1.03)}
+.peca .nfotos{position:absolute;left:12px;top:calc(12px + 26px);background:rgba(255,255,255,.9);color:var(--vinho);font-size:.7rem;padding:3px 9px;border-radius:999px}
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;max-width:1200px;margin:24px auto 0}
+.galeria button{padding:0;border:0;border-radius:var(--raio);overflow:hidden;cursor:zoom-in;aspect-ratio:3/4;background:var(--creme)}
+.galeria img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.galeria button:hover img{transform:scale(1.05)}
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(20,10,14,.94);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:min(92vw,900px);max-height:84vh;object-fit:contain;border-radius:8px}
+.lightbox p{color:var(--ouro-claro);margin:10px 0 0;text-align:center}
+.lightbox button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;font-size:2rem;width:48px;height:48px;border-radius:50%;cursor:pointer}
+.lb-fechar{top:16px;right:16px}.lb-ant{left:12px;top:50%}.lb-prox{right:12px;top:50%}
+@media (max-width:860px){.hero{flex-direction:column;align-items:stretch}.hero-foto{flex:none;max-width:420px;width:100%;margin:0 auto}}

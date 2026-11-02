@@ -20,6 +20,19 @@ if (DATA !== SEED && !fs.existsSync(path.join(DATA, 'catalogo.json'))) {
   fs.copyFileSync(path.join(SEED, 'catalogo.json'), path.join(DATA, 'catalogo.json'));
   console.log('Catálogo inicial copiado para', DATA);
 }
+// Peças novas adicionadas no código (ex.: fotos reais) entram no catálogo do volume sem apagar o que foi editado no painel.
+if (DATA !== SEED) {
+  try {
+    const seed = JSON.parse(fs.readFileSync(path.join(SEED, 'catalogo.json'), 'utf8'));
+    const atual = JSON.parse(fs.readFileSync(path.join(DATA, 'catalogo.json'), 'utf8'));
+    const ids = new Set(atual.map(i => i.id));
+    const novos = seed.filter(i => !ids.has(i.id));
+    if (novos.length) {
+      fs.writeFileSync(path.join(DATA, 'catalogo.json'), JSON.stringify([...novos, ...atual], null, 2));
+      console.log(`${novos.length} peça(s) nova(s) adicionadas ao catálogo`);
+    }
+  } catch (e) { console.error('Falha ao mesclar catálogo', e.message); }
+}
 const config = () => {
   const cfg = JSON.parse(fs.readFileSync(path.join(SEED, 'config.json'), 'utf8'));
   cfg.agenda.datasBloqueadas = load('bloqueios.json', cfg.agenda.datasBloqueadas || []);
@@ -219,7 +232,7 @@ async function api(req, res, url) {
       id: clean(b.id, 40) || crypto.randomBytes(3).toString('hex'),
       nome: clean(b.nome, 80), categoria: clean(b.categoria, 30), estilo: clean(b.estilo, 40),
       tamanhos: clean(b.tamanhos, 60), cor: clean(b.cor, 40), descricao: clean(b.descricao, 400),
-      modalidade: clean(b.modalidade, 40) || 'Aluguel', imagem: clean(b.imagem, 300), destaque: !!b.destaque, ativo: b.ativo !== false
+      modalidade: clean(b.modalidade, 40) || 'Aluguel', imagem: clean(b.imagem, 300), fotos: (Array.isArray(b.fotos) ? b.fotos : String(b.fotos || '').split(',')).map(f => clean(f, 300)).filter(Boolean).slice(0, 12), destaque: !!b.destaque, ativo: b.ativo !== false
     };
     if (!item.nome || !item.categoria) return send(res, 400, { erro: 'Nome e categoria são obrigatórios' });
     const idx = all.findIndex(i => i.id === item.id);
