@@ -3,3 +3,4 @@ node_modules/
 .env
 data/agendamentos.json
 data/perguntas.json
+data/bloqueios.json

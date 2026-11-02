@@ -37,15 +37,27 @@ Abra http://localhost:3000. O painel fica em http://localhost:3000/admin (senha 
 | `public/img/hero.svg` | troque por uma foto real de noiva (ex.: `hero.jpg`) e ajuste em `public/css/style.css` |
 | Variável `ADMIN_PASSWORD` | **senha forte do painel** |
 
-## Publicar na internet
+## Publicar no Railway (passo a passo)
 
-O sistema grava os agendamentos em arquivos dentro da pasta `data/`, então precisa de **hospedagem com disco permanente**:
+1. Em https://railway.com, entre com a conta do GitHub → **New Project** → **Deploy from GitHub repo** → escolha `glamour-noivas`.
+   Se o repositório não aparecer: **Configure GitHub App** → dê acesso ao repositório `glamour-noivas`.
+2. No serviço criado, abra **Variables** e adicione:
+   - `ADMIN_PASSWORD` = uma senha forte para o painel
+   - `DATA_DIR` = `/data`
+3. **Disco permanente (obrigatório):** clique com o botão direito no serviço (ou `Ctrl/Cmd + K`) → **Add Volume** → *Mount path* `/data`.
+   Sem o volume, **os agendamentos são apagados a cada nova publicação**.
+4. Em **Settings → Networking → Generate Domain** você recebe um endereço `....up.railway.app`. Esse já é o site no ar.
+5. Teste: abra o endereço, faça um agendamento e confira em `/admin`.
+6. (Opcional) Domínio próprio: **Settings → Networking → Custom Domain** e o apontamento no registro.br.
 
-- **VPS** (Hostinger, Contabo, DigitalOcean, Oracle Cloud *Always Free*): `ADMIN_PASSWORD=suaSenha PORT=80 node server.js`, de preferência com `pm2` e HTTPS (Caddy ou Nginx).
-- **Railway / Render / Fly.io** com *volume persistente* montado em `data/`.
-- Planos gratuitos **sem disco persistente apagam os agendamentos** a cada reinício. Evite.
+Ao mudar algo no GitHub, o Railway publica de novo sozinho. Os dados do volume são mantidos.
 
-Domínio `.com.br`: registro.br (cerca de R$ 40/ano).
+**O que fica onde:**
+- `data/config.json` (no GitHub): WhatsApp, endereço, horários e respostas da Gabi. Edite aqui e publique.
+- Volume `/data`: agendamentos, catálogo editado pelo painel, folgas e perguntas. Muda com o uso e nunca é apagado.
+
+### Outras opções
+VPS (Hostinger, Contabo, Oracle Cloud *Always Free*): `ADMIN_PASSWORD=suaSenha DATA_DIR=/var/glamour PORT=80 node server.js`, de preferência com `pm2` e HTTPS.
 
 ## Estrutura
 

@@ -7,7 +7,21 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'glamour2026';
-const DATA = path.join(__dirname, 'data');
+// Configuração da loja e catálogo inicial vêm do código (pasta data/).
+// Dados que mudam com o uso (agendamentos, catálogo editado, folgas, perguntas) ficam em DATA_DIR.
+// No Railway, monte um volume e defina DATA_DIR=/data para nada se perder a cada publicação.
+const SEED = path.join(__dirname, 'data');
+const DATA = process.env.DATA_DIR || process.env.RAILWAY_VOLUME_MOUNT_PATH || SEED;
+fs.mkdirSync(DATA, { recursive: true });
+if (DATA !== SEED && !fs.existsSync(path.join(DATA, 'catalogo.json'))) {
+  fs.copyFileSync(path.join(SEED, 'catalogo.json'), path.join(DATA, 'catalogo.json'));
+  console.log('Catálogo inicial copiado para', DATA);
+}
+const config = () => {
+  const cfg = JSON.parse(fs.readFileSync(path.join(SEED, 'config.json'), 'utf8'));
+  cfg.agenda.datasBloqueadas = load('bloqueios.json', cfg.agenda.datasBloqueadas || []);
+  return cfg;
+};
 const PUBLIC = path.join(__dirname, 'public');
 
 // ---------- armazenamento simples em JSON (gravação atômica) ----------
@@ -47,7 +61,7 @@ function todayISO() { return nowAcre().toISOString().slice(0, 10); }
 
 // ---------- regras de agenda ----------
 function slotsFor(dateISO) {
-  const cfg = load('config.json', {});
+  const cfg = config();
   const ag = cfg.agenda;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateISO)) return { erro: 'Data inválida' };
   if (dateISO < todayISO()) return { data: dateISO, fechado: true, motivo: 'Data já passou', horarios: [] };
@@ -87,8 +101,9 @@ async function api(req, res, url) {
   const p = url.pathname;
   const m = req.method;
 
+  if (p === '/api/health') return send(res, 200, { ok: true });
   if (p === '/api/config' && m === 'GET') {
-    const cfg = load('config.json', {});
+    const cfg = config();
     return send(res, 200, { loja: cfg.loja, servicos: cfg.servicos, faq: cfg.faq, tiposAtendimento: cfg.tiposAtendimento, depoimentos: cfg.depoimentos });
   }
   if (p === '/api/catalogo' && m === 'GET') {
@@ -103,7 +118,7 @@ async function api(req, res, url) {
     const tipo = clean(b.tipo, 60), data = clean(b.data, 10), hora = clean(b.hora, 5);
     if (nome.length < 2) return send(res, 400, { erro: 'Informe seu nome.' });
     if (telefone.length < 10) return send(res, 400, { erro: 'Informe um WhatsApp com DDD.' });
-    const cfg = load('config.json', {});
+    const cfg = config();
     if (!cfg.tiposAtendimento.some(t => t.id === tipo)) return send(res, 400, { erro: 'Escolha o tipo de atendimento.' });
     const dia = slotsFor(data);
     const slot = dia.horarios?.find(h => h.hora === hora);
@@ -217,14 +232,13 @@ async function api(req, res, url) {
   if (p === '/api/admin/bloqueios' && m === 'POST') {
     const { data, bloquear } = await readBody(req);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(data || '')) return send(res, 400, { erro: 'Data inválida' });
-    const cfg = load('config.json', {});
-    const set = new Set(cfg.agenda.datasBloqueadas || []);
+    const set = new Set(config().agenda.datasBloqueadas);
     bloquear ? set.add(data) : set.delete(data);
-    cfg.agenda.datasBloqueadas = [...set].sort();
-    save('config.json', cfg);
-    return send(res, 200, { datasBloqueadas: cfg.agenda.datasBloqueadas });
+    const lista = [...set].sort();
+    save('bloqueios.json', lista);
+    return send(res, 200, { datasBloqueadas: lista });
   }
-  if (p === '/api/admin/bloqueios' && m === 'GET') return send(res, 200, { datasBloqueadas: load('config.json', {}).agenda.datasBloqueadas || [] });
+  if (p === '/api/admin/bloqueios' && m === 'GET') return send(res, 200, { datasBloqueadas: config().agenda.datasBloqueadas || [] });
 
   return send(res, 404, { erro: 'Rota não encontrada' });
 }
@@ -255,6 +269,7 @@ http.createServer(async (req, res) => {
     send(res, 400, { erro: 'Requisição inválida' });
   }
 }).listen(PORT, () => {
+  console.log(`Dados em: ${DATA}${DATA === SEED ? '  (⚠️ sem volume: no Railway os agendamentos se perdem a cada publicação)' : ''}`);
   console.log(`Glamour Noivas rodando em http://localhost:${PORT}  (painel: /admin)`);
   if (!process.env.ADMIN_PASSWORD) console.log('⚠️  Defina ADMIN_PASSWORD antes de publicar. Senha padrão: glamour2026');
 });

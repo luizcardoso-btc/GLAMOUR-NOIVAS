@@ -1,0 +1,9 @@
+{
+  "name": "glamour-noivas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site da Glamour Noivas: catálogo, agendamento 24h, assistente virtual e painel",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
