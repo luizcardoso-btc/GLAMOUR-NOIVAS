@@ -6,13 +6,15 @@
 <title>Glamour Noivas | Vestidos de Noiva, 15 Anos e Cerimonial em Rio Branco – AC</title>
 <meta name="description" content="Há mais de 20 anos em Rio Branco: vestidos de noiva e de 15 anos, paletós adulto e infantil, acessórios e cerimonial. Agende sua visita online, 24 horas.">
 <meta property="og:title" content="Glamour Noivas – Rio Branco, AC">
-<meta property="og:image" content="img/vestidos/perola-1.webp">
+<meta property="og:image" content="https://glamour-noivas-production.up.railway.app/img/logo/compartilhar.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:description" content="Vestidos de noiva, 15 anos, paletós e cerimonial. Agende sua prova online.">
 <meta name="theme-color" content="#f8dfe6">
-<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/logo/icone-32.png" type="image/png">
+<link rel="apple-touch-icon" href="img/logo/icone-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ClothingStore","name":"Glamour Noivas","address":{"@type":"PostalAddress","streetAddress":"Rua Paulo VI, 196 - Isaura Parente","addressLocality":"Rio Branco","addressRegion":"AC","addressCountry":"BR"},"telephone":"+55-68-99219-1737","sameAs":["https://www.instagram.com/glamournoivasac/"],"description":"Vestidos de noiva, 15 anos, paletós adulto e infantil, acessórios e cerimonial."}
@@ -20,7 +22,7 @@
 </head>
 <body>
 <header class="topo" id="topo">
-  <a href="#inicio" class="marca">Glamour <em>Noivas</em></a>
+  <a href="#inicio" class="marca logo" aria-label="Glamour Noivas – início"><img src="img/logo/monograma-240.png" alt="" width="44" height="40"><span>Glamour Noivas</span></a>
   <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false">☰</button>
   <nav class="menu">
     <a href="#servicos">Serviços</a>
@@ -36,6 +38,7 @@
 <main>
 <section class="hero" id="inicio">
   <div class="hero-txt">
+    <img class="hero-logo" src="img/logo/monograma.webp" alt="" aria-hidden="true">
     <p class="sobre">Rio Branco · Acre · desde 2005</p>
     <h1>O vestido dos seus sonhos<br><em>está esperando por você</em></h1>
     <p class="lead">Há mais de 20 anos vestindo noivas, debutantes e famílias inteiras, com atendimento exclusivo, acervo amplo e cerimonial completo.</p>
@@ -156,7 +159,7 @@
 
 <footer class="rodape">
   <div>
-    <p class="marca">Glamour <em>Noivas</em></p>
+    <img class="logo-rodape" src="img/logo/logo-completa.webp" alt="Glamour Noivas" width="150" loading="lazy">
     <p id="rod-endereco"></p>
     <p id="rod-horario"></p>
   </div>
@@ -170,10 +173,10 @@
 
 <!-- Assistente virtual -->
 <button class="chat-abrir" id="chat-abrir" aria-label="Falar com a assistente virtual">
-  <span class="bolha">💬</span><span class="chat-label">Fale com a Vitória <small>24h</small></span>
+  <span class="bolha"><img src="img/logo/monograma-240.png" alt=""></span><span class="chat-label">Fale com a Vitória <small>24h</small></span>
 </button>
 <section class="chat" id="chat" hidden aria-label="Assistente virtual">
-  <header><div><strong>Vitória</strong><small>Assistente virtual · responde 24h</small></div><button id="chat-fechar" aria-label="Fechar">×</button></header>
+  <header><img class="chat-avatar" src="img/logo/icone-192.png" alt=""><div style="flex:1"><strong>Vitória</strong><small>Assistente virtual · responde 24h</small></div><button id="chat-fechar" aria-label="Fechar">×</button></header>
   <div class="chat-msgs" id="chat-msgs" aria-live="polite"></div>
   <div class="chat-sugestoes" id="chat-sugestoes"></div>
   <form class="chat-form" id="chat-form"><input id="chat-input" placeholder="Digite sua mensagem…" autocomplete="off" maxlength="300"><button aria-label="Enviar">➤</button></form>

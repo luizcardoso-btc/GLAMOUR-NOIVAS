@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex">
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#f8dfe6"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>Painel · Glamour Noivas</title>
-<link rel="icon" href="img/favicon.svg">
+<link rel="icon" href="img/logo/icone-32.png" type="image/png"><link rel="apple-touch-icon" href="img/logo/icone-180.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--vinho:#4a3a3e;--ouro:#c9971c;--creme:#fcedf1;--marfim:#fff;--suave:#7a6a6f;--rose:#f8dfe6;--rose-forte:#eeb8c7;--ouro-texto:#8c640a;--ouro-grad:linear-gradient(135deg,#a8770f 0%,#d4a632 28%,#f7df8a 50%,#d4a632 72%,#a8770f 100%)}
@@ -36,14 +36,14 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
 </head>
 <body>
 <div id="tela-login" class="login">
-  <h1 style="font-family:'Cormorant Garamond',serif;color:var(--vinho)">Glamour Noivas</h1>
+  <img src="img/logo/logo-completa.webp" alt="Glamour Noivas" style="width:170px;margin:0 auto 6px;display:block">
   <p>Painel administrativo</p>
   <form id="f-login"><input type="password" id="senha" placeholder="Senha" autocomplete="current-password"><button class="btn ouro" style="width:100%">Entrar</button></form>
   <p id="login-erro" style="color:#a33"></p>
 </div>
 
 <div id="painel" hidden>
-<header><h1>Glamour Noivas · Painel</h1>
+<header><h1 style="display:flex;align-items:center;gap:10px"><img src="img/logo/monograma-240.png" alt="" style="height:38px">Painel da loja</h1>
   <nav><button data-aba="agenda" class="ativo">📅 Agenda</button><button data-aba="catalogo">👗 Catálogo</button><button data-aba="bloqueios">🚫 Folgas</button><button data-aba="gabi">🤖 Vitória <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
 </header>
 <main>
