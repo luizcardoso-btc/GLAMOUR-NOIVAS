@@ -22,8 +22,8 @@ Link da bio: `[LINK]/#agendar`
 | Pergunta frequente | Resposta |
 |---|---|
 | Quanto custa? | Os valores variam conforme o modelo e a data 💕 Na visita mostramos opções para o seu orçamento, com parcelamento. Agende aqui: [LINK]/#agendar |
-| Como agendar? | É rapidinho e funciona 24h: [LINK]/#agendar. Se preferir, a Gabi, nossa assistente, agenda pelo chat do site. |
-| Onde fica? | [ENDEREÇO]. Mapa: [LINK MAPS] |
+| Como agendar? | É rapidinho e funciona 24h: [LINK]/#agendar. Se preferir, a Vitória, nossa assistente virtual, agenda pelo chat do site. |
+| Onde fica? | Rua Paulo VI, 196 – Isaura Parente, Rio Branco – AC. Mapa: [LINK MAPS] |
 | Tem 15 anos? | Temos! Vestidos de baile, troca, coroas e cerimonial completo 👑 [LINK]/#agendar |
 
 ---
@@ -40,7 +40,7 @@ Já já uma de nossas consultoras te responde! ✨
 **Mensagem de ausência** (fora do horário):
 ```
 Oi! 🌙 Estamos fora do horário agora, mas você já pode garantir seu horário em [LINK]/#agendar
-e tirar dúvidas com a Gabi, nossa assistente 24h. Respondemos assim que abrirmos! 💕
+e tirar dúvidas com a Vitória, nossa assistente virtual 24h. Respondemos assim que abrirmos! 💕
 ```
 
 **Respostas rápidas** (digite `/` no chat):
@@ -97,5 +97,5 @@ Atendimento exclusivo com hora marcada. Agende sua prova online, 24 horas por di
 | Todo dia, 17h | Enviar lembretes de amanhã | Painel → "Amanhã (lembretes)" → 💬 Lembrete |
 | Depois de cada visita | Marcar *concluído* ou *fechou* | Painel |
 | 2 dias após visita sem fechar | `/posvisita` | WhatsApp |
-| Sexta-feira | Ver perguntas que a Gabi não soube responder | Painel → 🤖 Gabi |
+| Sexta-feira | Ver perguntas que a Vitória não soube responder | Painel → 🤖 Vitória |
 | Fim do mês | Exportar planilha e ver taxa de fechamento | Painel → Exportar |

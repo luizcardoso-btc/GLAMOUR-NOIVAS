@@ -26,7 +26,7 @@ async function init() {
   $('#lista-faq').innerHTML = config.faq.map(f => `<details><summary>${esc(f.pergunta)}</summary><p>${esc(App.preencher(f.resposta))}</p></details>`).join('');
   $('#rod-endereco').textContent = l.endereco;
   $('#rod-horario').textContent = l.horarioTexto;
-  $('#rod-whats').href = whatsLink('Olá! Vim pelo site da Glamour Noivas.');
+  $('#rod-contatos').innerHTML = (l.contatos || []).map(c => `<a target="_blank" rel="noopener" href="https://wa.me/${c.whatsapp}?text=${encodeURIComponent('Olá, ' + c.nome + '! Vim pelo site da Glamour Noivas.')}">WhatsApp ${esc(c.nome)} · ${esc(c.telefone)}</a>`).join('');
   $('#rod-insta').href = l.instagram;
   $('#rod-mapa').href = l.mapsUrl;
   $('#ano').textContent = new Date().getFullYear();

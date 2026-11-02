@@ -44,7 +44,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
 
 <div id="painel" hidden>
 <header><h1>Glamour Noivas · Painel</h1>
-  <nav><button data-aba="agenda" class="ativo">📅 Agenda</button><button data-aba="catalogo">👗 Catálogo</button><button data-aba="bloqueios">🚫 Folgas</button><button data-aba="gabi">🤖 Gabi <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
+  <nav><button data-aba="agenda" class="ativo">📅 Agenda</button><button data-aba="catalogo">👗 Catálogo</button><button data-aba="bloqueios">🚫 Folgas</button><button data-aba="gabi">🤖 Vitória <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
 </header>
 <main>
   <section id="aba-agenda">
@@ -151,8 +151,8 @@ function renderAgenda() {
   if (st) lista = lista.filter(a => a.status === st);
   if (q) lista = lista.filter(a => (a.nome + a.telefone).toLowerCase().includes(q));
   const tipoNome = id => cfg.tiposAtendimento.find(t => t.id === id)?.nome || id;
-  const lembrete = a => `Oi, ${a.nome.split(' ')[0]}! 💍 Passando para lembrar da sua visita *amanhã (${fmt(a.data)}) às ${a.hora}* na Glamour Noivas. Dica: traga uma lingerie cor da pele e o sapato do evento. Até lá! ✨`;
-  const msg = a => a.data === somaDias(1) ? lembrete(a) : `Olá, ${a.nome.split(' ')[0]}! Aqui é da Glamour Noivas 💍 Confirmando sua visita em ${fmt(a.data)} às ${a.hora} (${tipoNome(a.tipo)}). Podemos contar com você?`;
+  const lembrete = a => `Oi, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas 💍 Passando para lembrar da sua visita *amanhã (${fmt(a.data)}) às ${a.hora}* na loja (Rua Paulo VI, 196 – Isaura Parente). Dica: traga uma lingerie cor da pele e o sapato do evento. Até lá! ✨`;
+  const msg = a => a.data === somaDias(1) ? lembrete(a) : `Olá, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas 💍 Confirmando sua visita em ${fmt(a.data)} às ${a.hora} (${tipoNome(a.tipo)}). Podemos contar com você?`;
   $('#tb-agenda').innerHTML = lista.length ? lista.map(a => `<tr>
     <td data-l="Data"><b>${fmt(a.data)}</b> ${diaSemana(a.data)}<br>${a.hora}</td>
     <td data-l="Cliente">${esc(a.nome)}<br><small>${esc(a.telefone)}</small></td>
@@ -192,7 +192,7 @@ $('#f-item').onsubmit = async e => {
   f.reset(); f.id.value = ''; carregarCatalogo();
 };
 
-// ---------- perguntas da Gabi ----------
+// ---------- perguntas da assistente ----------
 async function carregarPerguntas() {
   const lista = await api('/api/admin/perguntas');
   $('#n-perg').textContent = lista.length ? `(${lista.length})` : '';

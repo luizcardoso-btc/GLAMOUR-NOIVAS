@@ -1,4 +1,4 @@
-// Gabi — assistente virtual 24h da Glamour Noivas (100% gratuita, roda no navegador)
+// Vitória — assistente virtual 24h da Glamour Noivas (100% gratuita, roda no navegador)
 (() => {
   const $ = s => document.querySelector(s);
   const msgs = $('#chat-msgs'), sug = $('#chat-sugestoes'), input = $('#chat-input');
@@ -36,7 +36,7 @@
   function saudacao() {
     const h = horaAcre().getUTCHours();
     const oi = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-    bot(`${oi}! ✨ Eu sou a Gabi, assistente virtual da Glamour Noivas. Há mais de 20 anos realizamos sonhos em Rio Branco.\n\nPosso tirar suas dúvidas e agendar sua visita agora mesmo, a qualquer hora. Como posso ajudar?`);
+    bot(`${oi}! ✨ Eu sou a Vitória, assistente virtual da Glamour Noivas. Há mais de 20 anos realizamos sonhos em Rio Branco.\n\nPosso tirar suas dúvidas e agendar sua visita agora mesmo, a qualquer hora. Como posso ajudar?`);
   }
 
   // ---------- interpretação de datas em português ----------
@@ -169,7 +169,8 @@
     }
     if (/atendente|humano|pessoa|whats|falar com|ligar|telefone|contato/.test(t)) {
       const aviso = lojaAberta() ? 'Nossa equipe está online agora!' : 'Estamos fora do horário agora, mas sua mensagem fica registrada e respondemos assim que abrirmos. 🌙';
-      return bot(`${aviso}\n\nFale direto com a gente: ${GN.whatsLink('Olá! Vim pelo site e gostaria de falar com uma atendente.')}`);
+      const cs = GN.config.loja.contatos || [];
+      return bot(`${aviso}<br><br>Fale direto com a gente pelo WhatsApp:<br>` + cs.map(c => `💬 <a target="_blank" rel="noopener" href="https://wa.me/${c.whatsapp}?text=${encodeURIComponent('Olá, ' + c.nome + '! Vim pelo site da Glamour Noivas.')}">${esc(c.nome)}</a> · ${esc(c.telefone)} <small>(${esc(c.funcao)})</small>`).join('<br>'), SUGESTOES_PADRAO, true);
     }
     if (/^(oi|ola|bom dia|boa tarde|boa noite|hey|eai|opa)\b/.test(t) && t.length < 25) return saudacao();
     if (/obrigad|valeu|brigad/.test(t)) return bot('Imagina! 💕 Estou aqui 24h. Quando quiser, é só chamar.');

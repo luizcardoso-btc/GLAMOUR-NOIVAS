@@ -35,7 +35,7 @@ Mensagens-chave para usar em tudo (bio, site, anúncios, atendimento):
 | Recurso | Para que serve |
 |---|---|
 | **Agendamento online 24h** | Mostra só os horários livres de verdade, impede encaixar duas clientes no mesmo horário e respeita folgas e feriados |
-| **Assistente virtual "Gabi" (grátis)** | Responde dúvidas 24h (horário, endereço, valores, prazos, ajustes, 15 anos, paletós, cerimonial) e **faz o agendamento completo dentro da conversa** |
+| **Assistente virtual "Vitória" (grátis)** | Responde dúvidas 24h (horário, endereço, valores, prazos, ajustes, 15 anos, paletós, cerimonial) e **faz o agendamento completo dentro da conversa** |
 | **Catálogo com favoritos ❤️** | A noiva marca os modelos que amou e eles chegam no agendamento, então a consultora já separa as peças antes da visita |
 | **Confirmação por WhatsApp** | Cliente envia a confirmação pronta e a loja confirma com 1 clique pelo painel |
 | **Painel da loja** (`/admin`) | Agenda do dia/semana, status (confirmado, compareceu, faltou), busca, exportação para planilha, cadastro de peças e bloqueio de datas |
@@ -153,7 +153,7 @@ Criar uma rede de indicação com **fotógrafos, buffets, salões de festa, maqu
 ## 7. Próximas melhorias do sistema (quando quiser evoluir)
 
 1. **Lembretes automáticos no WhatsApp** (via WhatsApp Cloud API: as primeiras conversas do mês são gratuitas e depois cobra por mensagem).
-2. **Assistente com inteligência artificial** que entende perguntas livres e recomenda vestidos. Custo baixo por conversa, mas **não é gratuito**. A Gabi atual é 100% grátis e já cobre as dúvidas comuns e o agendamento.
+2. **Assistente com inteligência artificial** que entende perguntas livres e recomenda vestidos. Custo baixo por conversa, mas **não é gratuito**. A Vitória atual é 100% grátis e já cobre as dúvidas comuns e o agendamento.
 3. **Contrato e prova digital:** controle de datas de prova, retirada e devolução por peça (evita alugar o mesmo vestido para duas datas próximas).
 4. **Área da cliente:** acompanhar provas, pagar sinal por Pix.
 5. **Página "Nossas Noivas"**: galeria de casamentos reais (a prova social mais forte que existe).

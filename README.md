@@ -3,7 +3,7 @@
 Site da Glamour Noivas (Rio Branco – AC) com:
 - Catálogo com filtros e favoritos
 - Agendamento online 24h com controle de vagas por horário
-- Assistente virtual "Gabi", gratuita, que responde dúvidas e agenda pela conversa
+- Assistente virtual "Vitória", gratuita, que responde dúvidas e agenda pela conversa
 - Consulta, cancelamento e "salvar na agenda do celular" pela própria cliente
 - Painel da loja em `/admin`: agenda, lembretes de amanhã, contratos fechados, taxa de fechamento, catálogo, folgas e perguntas que a assistente não soube responder. Pode ser instalado no celular como aplicativo.
 
@@ -53,7 +53,7 @@ Abra http://localhost:3000. O painel fica em http://localhost:3000/admin (senha 
 Ao mudar algo no GitHub, o Railway publica de novo sozinho. Os dados do volume são mantidos.
 
 **O que fica onde:**
-- `data/config.json` (no GitHub): WhatsApp, endereço, horários e respostas da Gabi. Edite aqui e publique.
+- `data/config.json` (no GitHub): WhatsApp, endereço, horários e respostas da Vitória. Edite aqui e publique.
 - Volume `/data`: agendamentos, catálogo editado pelo painel, folgas e perguntas. Muda com o uso e nunca é apagado.
 
 ### Outras opções

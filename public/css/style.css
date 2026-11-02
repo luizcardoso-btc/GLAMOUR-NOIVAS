@@ -164,3 +164,4 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ouro);outline-of
 .mc-card .acoes{justify-content:center;margin:16px 0 0}
 .btn-texto{background:none;border:0;color:#a33;text-decoration:underline;cursor:pointer;font-family:var(--sans)}
 .secao-clara .btn-linha{color:var(--vinho);border-color:var(--ouro)}
+#rod-contatos{display:flex;flex-direction:column;gap:8px}
