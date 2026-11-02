@@ -1,0 +1,228 @@
+// Glamour Noivas — servidor sem dependências externas (Node 18+)
+// Serve o site, a API de catálogo/agendamento e o painel administrativo.
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+const PORT = process.env.PORT || 3000;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'glamour2026';
+const DATA = path.join(__dirname, 'data');
+const PUBLIC = path.join(__dirname, 'public');
+
+// ---------- armazenamento simples em JSON (gravação atômica) ----------
+function load(name, fallback) {
+  try { return JSON.parse(fs.readFileSync(path.join(DATA, name), 'utf8')); }
+  catch { return fallback; }
+}
+function save(name, value) {
+  const file = path.join(DATA, name);
+  const tmp = file + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(value, null, 2));
+  fs.renameSync(tmp, file);
+}
+
+// ---------- utilidades ----------
+const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript',
+  '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon' };
+
+function send(res, status, body, headers = {}) {
+  const isObj = typeof body === 'object' && !Buffer.isBuffer(body);
+  res.writeHead(status, { 'Content-Type': isObj ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8', ...headers });
+  res.end(isObj ? JSON.stringify(body) : body);
+}
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let data = '';
+    req.on('data', c => { data += c; if (data.length > 1e6) { reject(new Error('payload')); req.destroy(); } });
+    req.on('end', () => { try { resolve(data ? JSON.parse(data) : {}); } catch { reject(new Error('json')); } });
+  });
+}
+const clean = (s, max = 200) => String(s ?? '').replace(/[<>]/g, '').trim().slice(0, max);
+
+// Data/hora no fuso do Acre (UTC-5, sem horário de verão)
+function nowAcre() { return new Date(Date.now() - 5 * 3600 * 1000); }
+function todayISO() { return nowAcre().toISOString().slice(0, 10); }
+
+// ---------- regras de agenda ----------
+function slotsFor(dateISO) {
+  const cfg = load('config.json', {});
+  const ag = cfg.agenda;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateISO)) return { erro: 'Data inválida' };
+  if (dateISO < todayISO()) return { data: dateISO, fechado: true, motivo: 'Data já passou', horarios: [] };
+  const maxDate = new Date(nowAcre().getTime() + ag.antecedenciaMaximaDias * 864e5).toISOString().slice(0, 10);
+  if (dateISO > maxDate) return { data: dateISO, fechado: true, motivo: `Agendamos com até ${ag.antecedenciaMaximaDias} dias de antecedência`, horarios: [] };
+  if ((ag.datasBloqueadas || []).includes(dateISO)) return { data: dateISO, fechado: true, motivo: 'Loja fechada nesta data', horarios: [] };
+
+  const weekday = new Date(dateISO + 'T12:00:00Z').getUTCDay(); // 0=domingo
+  const periodos = ag.funcionamento[String(weekday)] || [];
+  if (!periodos.length) return { data: dateISO, fechado: true, motivo: 'Não abrimos neste dia da semana', horarios: [] };
+
+  const bookings = load('agendamentos.json', []).filter(b => b.data === dateISO && b.status !== 'cancelado');
+  const nowMin = dateISO === todayISO() ? nowAcre().getUTCHours() * 60 + nowAcre().getUTCMinutes() + 60 : -1;
+  const horarios = [];
+  for (const [ini, fim] of periodos) {
+    const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    for (let t = toMin(ini); t + ag.duracaoMinutos <= toMin(fim); t += ag.duracaoMinutos) {
+      const hhmm = `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
+      const ocupados = bookings.filter(b => b.hora === hhmm).length;
+      horarios.push({ hora: hhmm, vagas: Math.max(0, ag.atendimentosSimultaneos - ocupados), disponivel: t > nowMin && ocupados < ag.atendimentosSimultaneos });
+    }
+  }
+  return { data: dateISO, fechado: false, horarios };
+}
+
+// ---------- autenticação do painel ----------
+const sessions = new Map(); // token -> expira
+function isAdmin(req) {
+  const token = (req.headers.authorization || '').replace('Bearer ', '');
+  const exp = sessions.get(token);
+  return exp && exp > Date.now();
+}
+const loginAttempts = new Map();
+
+// ---------- rotas da API ----------
+async function api(req, res, url) {
+  const p = url.pathname;
+  const m = req.method;
+
+  if (p === '/api/config' && m === 'GET') {
+    const cfg = load('config.json', {});
+    return send(res, 200, { loja: cfg.loja, servicos: cfg.servicos, faq: cfg.faq, tiposAtendimento: cfg.tiposAtendimento, depoimentos: cfg.depoimentos });
+  }
+  if (p === '/api/catalogo' && m === 'GET') {
+    return send(res, 200, load('catalogo.json', []).filter(i => i.ativo !== false));
+  }
+  if (p === '/api/horarios' && m === 'GET') {
+    return send(res, 200, slotsFor(url.searchParams.get('data') || todayISO()));
+  }
+  if (p === '/api/agendamentos' && m === 'POST') {
+    const b = await readBody(req);
+    const nome = clean(b.nome, 80), telefone = clean(b.telefone, 20).replace(/\D/g, '');
+    const tipo = clean(b.tipo, 60), data = clean(b.data, 10), hora = clean(b.hora, 5);
+    if (nome.length < 2) return send(res, 400, { erro: 'Informe seu nome.' });
+    if (telefone.length < 10) return send(res, 400, { erro: 'Informe um WhatsApp com DDD.' });
+    const cfg = load('config.json', {});
+    if (!cfg.tiposAtendimento.some(t => t.id === tipo)) return send(res, 400, { erro: 'Escolha o tipo de atendimento.' });
+    const dia = slotsFor(data);
+    const slot = dia.horarios?.find(h => h.hora === hora);
+    if (!slot || !slot.disponivel) return send(res, 409, { erro: 'Este horário acabou de ser preenchido ou não está disponível. Escolha outro, por favor.' });
+    const ag = {
+      id: crypto.randomBytes(4).toString('hex').toUpperCase(),
+      nome, telefone, tipo, data, hora,
+      dataEvento: clean(b.dataEvento, 10), acompanhantes: Math.min(10, Math.max(0, parseInt(b.acompanhantes) || 0)),
+      interesse: clean(b.interesse, 120), observacoes: clean(b.observacoes, 500),
+      origem: b.origem === 'chat' ? 'chat' : 'site', status: 'pendente', criadoEm: new Date().toISOString()
+    };
+    const all = load('agendamentos.json', []);
+    all.push(ag);
+    save('agendamentos.json', all);
+    console.log(`[agendamento] ${ag.id} ${ag.data} ${ag.hora} ${ag.nome}`);
+    return send(res, 201, ag);
+  }
+
+  // ---- painel ----
+  if (p === '/api/admin/login' && m === 'POST') {
+    const ip = req.socket.remoteAddress;
+    const tries = loginAttempts.get(ip) || { n: 0, t: Date.now() };
+    if (Date.now() - tries.t > 15 * 60e3) { tries.n = 0; tries.t = Date.now(); }
+    if (tries.n >= 10) return send(res, 429, { erro: 'Muitas tentativas. Aguarde 15 minutos.' });
+    const { senha } = await readBody(req);
+    const a = Buffer.from(String(senha || '')), bpw = Buffer.from(ADMIN_PASSWORD);
+    if (a.length !== bpw.length || !crypto.timingSafeEqual(a, bpw)) {
+      tries.n++; loginAttempts.set(ip, tries);
+      return send(res, 401, { erro: 'Senha incorreta' });
+    }
+    const token = crypto.randomBytes(24).toString('hex');
+    sessions.set(token, Date.now() + 12 * 3600e3);
+    return send(res, 200, { token });
+  }
+  if (p.startsWith('/api/admin/') && !isAdmin(req)) return send(res, 401, { erro: 'Não autorizado' });
+
+  if (p === '/api/admin/agendamentos' && m === 'GET') {
+    const all = load('agendamentos.json', []).sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
+    return send(res, 200, all);
+  }
+  const mStatus = p.match(/^\/api\/admin\/agendamentos\/([A-F0-9]+)$/);
+  if (mStatus && m === 'PATCH') {
+    const { status } = await readBody(req);
+    if (!['pendente', 'confirmado', 'concluido', 'cancelado', 'faltou'].includes(status)) return send(res, 400, { erro: 'Status inválido' });
+    const all = load('agendamentos.json', []);
+    const item = all.find(a => a.id === mStatus[1]);
+    if (!item) return send(res, 404, { erro: 'Não encontrado' });
+    item.status = status; item.atualizadoEm = new Date().toISOString();
+    save('agendamentos.json', all);
+    return send(res, 200, item);
+  }
+  if (p === '/api/admin/agendamentos.csv' && m === 'GET') {
+    const all = load('agendamentos.json', []);
+    const cols = ['id', 'data', 'hora', 'nome', 'telefone', 'tipo', 'dataEvento', 'acompanhantes', 'interesse', 'observacoes', 'status', 'origem', 'criadoEm'];
+    const csv = [cols.join(';'), ...all.map(a => cols.map(c => `"${String(a[c] ?? '').replace(/"/g, '""')}"`).join(';'))].join('\n');
+    return send(res, 200, '﻿' + csv, { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="agendamentos.csv"' });
+  }
+  if (p === '/api/admin/catalogo' && m === 'GET') return send(res, 200, load('catalogo.json', []));
+  if (p === '/api/admin/catalogo' && m === 'POST') {
+    const b = await readBody(req);
+    const all = load('catalogo.json', []);
+    const item = {
+      id: clean(b.id, 40) || crypto.randomBytes(3).toString('hex'),
+      nome: clean(b.nome, 80), categoria: clean(b.categoria, 30), estilo: clean(b.estilo, 40),
+      tamanhos: clean(b.tamanhos, 60), cor: clean(b.cor, 40), descricao: clean(b.descricao, 400),
+      modalidade: clean(b.modalidade, 40) || 'Aluguel', imagem: clean(b.imagem, 300), destaque: !!b.destaque, ativo: b.ativo !== false
+    };
+    if (!item.nome || !item.categoria) return send(res, 400, { erro: 'Nome e categoria são obrigatórios' });
+    const idx = all.findIndex(i => i.id === item.id);
+    if (idx >= 0) all[idx] = item; else all.push(item);
+    save('catalogo.json', all);
+    return send(res, 200, item);
+  }
+  const mCat = p.match(/^\/api\/admin\/catalogo\/([\w-]+)$/);
+  if (mCat && m === 'DELETE') {
+    save('catalogo.json', load('catalogo.json', []).filter(i => i.id !== mCat[1]));
+    return send(res, 200, { ok: true });
+  }
+  if (p === '/api/admin/bloqueios' && m === 'POST') {
+    const { data, bloquear } = await readBody(req);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(data || '')) return send(res, 400, { erro: 'Data inválida' });
+    const cfg = load('config.json', {});
+    const set = new Set(cfg.agenda.datasBloqueadas || []);
+    bloquear ? set.add(data) : set.delete(data);
+    cfg.agenda.datasBloqueadas = [...set].sort();
+    save('config.json', cfg);
+    return send(res, 200, { datasBloqueadas: cfg.agenda.datasBloqueadas });
+  }
+  if (p === '/api/admin/bloqueios' && m === 'GET') return send(res, 200, { datasBloqueadas: load('config.json', {}).agenda.datasBloqueadas || [] });
+
+  return send(res, 404, { erro: 'Rota não encontrada' });
+}
+
+// ---------- arquivos estáticos ----------
+function serveStatic(req, res, url) {
+  let rel = decodeURIComponent(url.pathname);
+  if (rel === '/') rel = '/index.html';
+  if (rel === '/admin') rel = '/admin.html';
+  const file = path.normalize(path.join(PUBLIC, rel));
+  if (!file.startsWith(PUBLIC)) return send(res, 403, 'Proibido');
+  fs.readFile(file, (err, buf) => {
+    if (err) return send(res, 404, 'Página não encontrada');
+    res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'public, max-age=300' });
+    res.end(buf);
+  });
+}
+
+http.createServer(async (req, res) => {
+  const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  try {
+    if (url.pathname.startsWith('/api/')) return await api(req, res, url);
+    serveStatic(req, res, url);
+  } catch (e) {
+    console.error(e);
+    send(res, 400, { erro: 'Requisição inválida' });
+  }
+}).listen(PORT, () => {
+  console.log(`Glamour Noivas rodando em http://localhost:${PORT}  (painel: /admin)`);
+  if (!process.env.ADMIN_PASSWORD) console.log('⚠️  Defina ADMIN_PASSWORD antes de publicar. Senha padrão: glamour2026');
+});

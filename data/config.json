@@ -1,0 +1,67 @@
+{
+  "loja": {
+    "nome": "Glamour Noivas",
+    "slogan": "Há mais de 20 anos vestindo os sonhos de Rio Branco",
+    "anosMercado": 20,
+    "cidade": "Rio Branco – AC",
+    "endereco": "Rua Exemplo, 123 – Centro, Rio Branco – AC (ATUALIZAR)",
+    "mapsUrl": "https://maps.google.com/?q=Glamour+Noivas+Rio+Branco",
+    "whatsapp": "5568999999999",
+    "telefoneExibicao": "(68) 99999-9999",
+    "instagram": "https://www.instagram.com/glamournoivasac/",
+    "horarioTexto": "Segunda a sexta, 8h às 12h e 14h às 18h · Sábado, 8h às 13h"
+  },
+  "agenda": {
+    "duracaoMinutos": 60,
+    "atendimentosSimultaneos": 2,
+    "antecedenciaMaximaDias": 90,
+    "funcionamento": {
+      "0": [],
+      "1": [["08:00", "12:00"], ["14:00", "18:00"]],
+      "2": [["08:00", "12:00"], ["14:00", "18:00"]],
+      "3": [["08:00", "12:00"], ["14:00", "18:00"]],
+      "4": [["08:00", "12:00"], ["14:00", "18:00"]],
+      "5": [["08:00", "12:00"], ["14:00", "18:00"]],
+      "6": [["08:00", "13:00"]]
+    },
+    "datasBloqueadas": ["2026-12-25", "2027-01-01"]
+  },
+  "tiposAtendimento": [
+    { "id": "noiva-primeira", "nome": "Noiva – primeira visita", "descricao": "Conhecer o acervo e provar modelos" },
+    { "id": "noiva-prova", "nome": "Noiva – prova / ajuste", "descricao": "Para quem já escolheu o vestido" },
+    { "id": "debutante", "nome": "15 anos – vestido da debutante", "descricao": "Vestidos de baile e troca de looks" },
+    { "id": "trajes-masculinos", "nome": "Paletós e ternos (adulto e infantil)", "descricao": "Noivo, padrinhos, pajens e família" },
+    { "id": "madrinhas-festa", "nome": "Madrinhas, mãe dos noivos e festa", "descricao": "Vestidos de festa e acessórios" },
+    { "id": "cerimonial", "nome": "Cerimonial – reunião", "descricao": "Organização de casamento ou 15 anos" },
+    { "id": "retirada-devolucao", "nome": "Retirada ou devolução", "descricao": "Buscar ou devolver peças" }
+  ],
+  "servicos": [
+    { "icone": "👰", "titulo": "Vestidos de Noiva", "texto": "Um acervo amplo de modelos sereia, princesa, evasê, boho e minimalistas, para aluguel ou venda, com ajustes no ateliê." },
+    { "icone": "👑", "titulo": "Debutantes 15 Anos", "texto": "Vestidos de baile, vestido de troca e acessórios para a noite mais esperada." },
+    { "icone": "🤵", "titulo": "Paletós Adulto e Infantil", "texto": "Noivo, padrinhos, pais e pajens com o mesmo padrão de elegância." },
+    { "icone": "💎", "titulo": "Acessórios", "texto": "Véus, grinaldas, tiaras, coroas, luvas, sapatos, gravatas e abotoaduras." },
+    { "icone": "🎀", "titulo": "Cerimonial", "texto": "Organização completa de casamentos e festas de 15 anos, do roteiro ao último brinde." },
+    { "icone": "🧵", "titulo": "Ajustes e Prova", "texto": "Provas acompanhadas e ajustes para o vestido ficar perfeito em você." }
+  ],
+  "depoimentos": [
+    { "nome": "Cliente (exemplo)", "evento": "Casamento 2025", "texto": "Fui super bem atendida, provei vários modelos e saí com o vestido dos meus sonhos. (Troque por depoimentos reais do Instagram/Google.)" },
+    { "nome": "Mãe de debutante (exemplo)", "evento": "15 anos 2025", "texto": "Cuidaram de tudo: vestido, acessórios e o cerimonial. A festa foi impecável." },
+    { "nome": "Noivo (exemplo)", "evento": "Casamento 2024", "texto": "Resolvi meu traje e o dos padrinhos e pajens num só lugar." }
+  ],
+  "faq": [
+    { "chaves": ["horario", "funciona", "abre", "fecha", "aberto", "expediente", "sabado", "domingo"], "pergunta": "Qual o horário de funcionamento?", "resposta": "Atendemos de segunda a sexta, das 8h às 12h e das 14h às 18h, e aos sábados das 8h às 13h. Para ter atenção exclusiva, o ideal é agendar seu horário. 😊" },
+    { "chaves": ["endereco", "onde fica", "localizacao", "local", "chegar", "mapa", "fica onde"], "pergunta": "Onde fica a loja?", "resposta": "Estamos em Rio Branco – AC: {endereco}. 📍 Veja no mapa: {mapsUrl}" },
+    { "chaves": ["preco", "valor", "quanto custa", "custa", "orcamento", "barato", "caro", "pagamento", "parcela", "pix", "cartao"], "pergunta": "Quanto custa o aluguel de um vestido?", "resposta": "Os valores variam conforme o modelo, a coleção e a data do evento. Na visita apresentamos as opções que cabem no seu orçamento, e parcelamos. Quer agendar uma visita sem compromisso?" },
+    { "chaves": ["alugar", "aluguel", "comprar", "venda", "vende", "sob medida"], "pergunta": "Vocês alugam ou vendem?", "resposta": "Trabalhamos com aluguel e também temos peças à venda. Na visita você vê as duas opções e decide com calma." },
+    { "chaves": ["antecedencia", "quando procurar", "quanto tempo antes", "meses antes", "prazo"], "pergunta": "Com quanto tempo de antecedência devo procurar?", "resposta": "Para noivas, recomendamos de 6 a 12 meses antes. Para debutantes, de 4 a 8 meses. Assim garantimos o modelo na sua data e o tempo dos ajustes. Mesmo com pouco tempo, fale com a gente: damos um jeito! 💕" },
+    { "chaves": ["ajuste", "costura", "apertar", "barra", "tamanho", "plus size", "gestante", "gravida"], "pergunta": "Fazem ajustes? Tem tamanhos grandes?", "resposta": "Sim! Fazemos os ajustes para o vestido ficar perfeito no seu corpo, e o acervo tem do 34 ao plus size. Gestantes também são muito bem-vindas." },
+    { "chaves": ["levar", "acompanhante", "acompanhantes", "mae", "madrinha", "quantas pessoas", "trazer"], "pergunta": "Posso levar acompanhantes?", "resposta": "Claro! Recomendamos até 3 acompanhantes para a experiência ser tranquila e especial. Dica: use uma lingerie cor da pele e, se puder, leve um sapato com a altura que pretende usar." },
+    { "chaves": ["15 anos", "quinze", "debutante", "debut", "aniversario"], "pergunta": "Têm vestidos de 15 anos?", "resposta": "Temos sim! 👑 Vestidos de baile, vestido de troca, coroas, tiaras e acessórios. Também fazemos o cerimonial completo da festa de 15 anos." },
+    { "chaves": ["paleto", "terno", "noivo", "padrinho", "pajem", "infantil", "menino", "smoking", "gravata"], "pergunta": "Têm paletós e ternos?", "resposta": "Temos paletós e ternos adulto e infantil: noivo, padrinhos, pais e pajens, com gravatas, coletes e abotoaduras para combinar." },
+    { "chaves": ["acessorio", "veu", "grinalda", "tiara", "coroa", "sapato", "luva", "buque", "joia", "brinco"], "pergunta": "Quais acessórios vocês têm?", "resposta": "Véus, grinaldas, tiaras, coroas, luvas, sapatos, bijuterias finas e acessórios masculinos. Montamos o look completo com você! 💎" },
+    { "chaves": ["cerimonial", "cerimonialista", "organizar", "organizacao", "assessoria", "planejar", "decoracao", "roteiro"], "pergunta": "Vocês fazem cerimonial?", "resposta": "Fazemos! Cerimonial de casamento e de 15 anos: roteiro, cronograma, coordenação de fornecedores e condução do grande dia. Posso agendar uma reunião para você conhecer os pacotes." },
+    { "chaves": ["madrinha", "festa", "formatura", "mae da noiva", "mae do noivo", "convidada"], "pergunta": "Têm vestidos de festa para madrinhas?", "resposta": "Sim! Vestidos de festa para madrinhas, mães dos noivos, daminhas e convidadas, em várias cores para combinar com a paleta do evento." },
+    { "chaves": ["devolucao", "devolver", "retirar", "retirada", "buscar", "lavagem", "limpeza"], "pergunta": "Como funciona retirada e devolução?", "resposta": "A retirada é feita normalmente 1 a 2 dias antes do evento, e a devolução 1 a 2 dias depois. A higienização fica por nossa conta. Os detalhes vão no seu contrato." },
+    { "chaves": ["catalogo", "modelos", "fotos", "ver vestidos", "colecao", "acervo"], "pergunta": "Posso ver o catálogo?", "resposta": "Pode! Veja uma seleção na seção Catálogo deste site. Lá você pode favoritar os modelos ❤️ e eles ficam anotados para a sua visita. O acervo completo está na loja." }
+  ]
+}

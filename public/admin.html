@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Painel · Glamour Noivas</title>
+<link rel="icon" href="img/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--vinho:#3b1f2b;--ouro:#b8955a;--creme:#f3ebe0;--marfim:#fbf7f1;--suave:#6e6166}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--marfim);color:#2b2226;font-size:15px}
+header{background:var(--vinho);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-family:'Cormorant Garamond',serif;margin:0;font-size:1.6rem}
+nav{display:flex;gap:6px;flex-wrap:wrap}nav button{background:none;border:1px solid #e8d6b3;color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit}
+nav button.ativo{background:var(--ouro);border-color:var(--ouro)}
+main{padding:20px;max-width:1200px;margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 14px rgba(59,31,43,.08)}.card b{display:block;font-size:1.8rem;color:var(--vinho)}.card span{color:var(--suave);font-size:.85rem}
+.barra{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+input,select,textarea{padding:9px 12px;border:1px solid #d9cbb6;border-radius:8px;font:inherit;background:#fff}
+.btn{background:var(--vinho);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer;font:inherit;text-decoration:none;display:inline-block}
+.btn.ouro{background:var(--ouro)}.btn.leve{background:var(--creme);color:var(--vinho)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(59,31,43,.08)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);vertical-align:top;font-size:.88rem}th{background:var(--creme);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.st{padding:3px 9px;border-radius:999px;font-size:.75rem;font-weight:600}
+.st.pendente{background:#fff3cd;color:#7a5b00}.st.confirmado{background:#d8f0dd;color:#1e6b33}.st.concluido{background:#dde7f7;color:#244a85}.st.cancelado,.st.faltou{background:#f7dede;color:#8a2323}
+.acoes{display:flex;gap:4px;flex-wrap:wrap}.acoes button,.acoes a{font-size:.75rem;padding:5px 8px;border-radius:6px;border:1px solid #d9cbb6;background:#fff;cursor:pointer;text-decoration:none;color:inherit}
+.login{max-width:340px;margin:12vh auto;background:#fff;padding:30px;border-radius:14px;box-shadow:0 10px 30px rgba(59,31,43,.12);text-align:center}
+.login input{width:100%;margin:14px 0}
+.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;background:#fff;padding:16px;border-radius:12px;margin-bottom:16px}
+.grid-form textarea{grid-column:1/-1}
+.vazio{text-align:center;color:var(--suave);padding:30px}
+@media(max-width:760px){table,thead,tbody,tr,td{display:block}thead{display:none}tr{border-bottom:6px solid var(--marfim)}td{border:0;padding:6px 12px}td::before{content:attr(data-l);display:block;font-size:.7rem;color:var(--suave);text-transform:uppercase}}
+</style>
+</head>
+<body>
+<div id="tela-login" class="login">
+  <h1 style="font-family:'Cormorant Garamond',serif;color:var(--vinho)">Glamour Noivas</h1>
+  <p>Painel administrativo</p>
+  <form id="f-login"><input type="password" id="senha" placeholder="Senha" autocomplete="current-password"><button class="btn ouro" style="width:100%">Entrar</button></form>
+  <p id="login-erro" style="color:#a33"></p>
+</div>
+
+<div id="painel" hidden>
+<header><h1>Glamour Noivas · Painel</h1>
+  <nav><button data-aba="agenda" class="ativo">📅 Agenda</button><button data-aba="catalogo">👗 Catálogo</button><button data-aba="bloqueios">🚫 Folgas</button><button id="sair">Sair</button></nav>
+</header>
+<main>
+  <section id="aba-agenda">
+    <div class="cards" id="cards"></div>
+    <div class="barra">
+      <select id="f-periodo"><option value="hoje">Hoje</option><option value="semana" selected>Próximos 7 dias</option><option value="futuros">Todos os próximos</option><option value="todos">Histórico completo</option></select>
+      <select id="f-status"><option value="">Todos os status</option><option>pendente</option><option>confirmado</option><option>concluido</option><option>cancelado</option><option>faltou</option></select>
+      <input id="f-busca" placeholder="Buscar nome ou telefone">
+      <a class="btn leve" id="csv">⬇ Exportar planilha</a>
+      <button class="btn leve" id="atualizar">↻ Atualizar</button>
+    </div>
+    <table><thead><tr><th>Data</th><th>Cliente</th><th>Atendimento</th><th>Detalhes</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-agenda"></tbody></table>
+  </section>
+
+  <section id="aba-catalogo" hidden>
+    <form class="grid-form" id="f-item">
+      <input type="hidden" name="id">
+      <input name="nome" placeholder="Nome do modelo *" required>
+      <select name="categoria" required><option>Noivas</option><option>15 Anos</option><option>Paletós</option><option>Festa</option><option>Acessórios</option></select>
+      <input name="estilo" placeholder="Estilo (Sereia, Princesa…)">
+      <input name="tamanhos" placeholder="Tamanhos (36 ao 44)">
+      <input name="cor" placeholder="Cor">
+      <input name="modalidade" placeholder="Aluguel / Venda">
+      <input name="imagem" placeholder="Link da foto (ex.: img/aurora.jpg)">
+      <label><input type="checkbox" name="destaque"> Destaque</label>
+      <textarea name="descricao" rows="2" placeholder="Descrição"></textarea>
+      <div><button class="btn ouro">Salvar peça</button> <button type="reset" class="btn leve">Limpar</button></div>
+    </form>
+    <table><thead><tr><th>Peça</th><th>Categoria</th><th>Tamanhos</th><th>Ações</th></tr></thead><tbody id="tb-cat"></tbody></table>
+  </section>
+
+  <section id="aba-bloqueios" hidden>
+    <p>Bloqueie feriados, folgas ou dias de evento: o site não oferece horários nessas datas.</p>
+    <div class="barra"><input type="date" id="d-bloq"><button class="btn" id="b-bloq">Bloquear data</button></div>
+    <div id="lista-bloq"></div>
+  </section>
+</main>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let token = sessionStorage.getItem('gn-token'), cfg = null, agenda = [], catalogo = [];
+const api = (url, opt = {}) => fetch(url, { ...opt, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opt.headers || {}) } })
+  .then(async r => { if (r.status === 401) { sair(); throw new Error('401'); } return r.json(); });
+const fmt = iso => iso ? iso.split('-').reverse().join('/') : '';
+const hoje = () => new Date(Date.now() - 5 * 3600e3).toISOString().slice(0, 10);
+const somaDias = n => new Date(Date.now() - 5 * 3600e3 + n * 864e5).toISOString().slice(0, 10);
+const DIAS = ['dom','seg','ter','qua','qui','sex','sáb'];
+const diaSemana = iso => DIAS[new Date(iso + 'T12:00:00Z').getUTCDay()];
+
+$('#f-login').onsubmit = async e => {
+  e.preventDefault();
+  const r = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ senha: $('#senha').value }) });
+  const j = await r.json();
+  if (!r.ok) return $('#login-erro').textContent = j.erro;
+  token = j.token; sessionStorage.setItem('gn-token', token); entrar();
+};
+function sair() { sessionStorage.removeItem('gn-token'); token = null; $('#painel').hidden = true; $('#tela-login').hidden = false; }
+$('#sair').onclick = sair;
+
+async function entrar() {
+  $('#tela-login').hidden = true; $('#painel').hidden = false;
+  cfg = await fetch('/api/config').then(r => r.json());
+  carregarAgenda();
+}
+document.querySelectorAll('nav [data-aba]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('nav [data-aba]').forEach(x => x.classList.toggle('ativo', x === b));
+  ['agenda','catalogo','bloqueios'].forEach(a => $('#aba-' + a).hidden = a !== b.dataset.aba);
+  if (b.dataset.aba === 'catalogo') carregarCatalogo();
+  if (b.dataset.aba === 'bloqueios') carregarBloqueios();
+});
+
+// ---------- agenda ----------
+async function carregarAgenda() { agenda = await api('/api/admin/agendamentos'); renderAgenda(); }
+['#f-periodo','#f-status'].forEach(s => $(s).onchange = renderAgenda); $('#f-busca').oninput = renderAgenda; $('#atualizar').onclick = carregarAgenda;
+$('#csv').onclick = async () => {
+  const r = await fetch('/api/admin/agendamentos.csv', { headers: { Authorization: 'Bearer ' + token } });
+  const url = URL.createObjectURL(await r.blob()); const a = document.createElement('a'); a.href = url; a.download = 'agendamentos.csv'; a.click();
+};
+function renderAgenda() {
+  const h = hoje(), per = $('#f-periodo').value, st = $('#f-status').value, q = $('#f-busca').value.toLowerCase();
+  const futuros = agenda.filter(a => a.data >= h && a.status !== 'cancelado');
+  $('#cards').innerHTML = [
+    ['Hoje', futuros.filter(a => a.data === h).length],
+    ['Próximos 7 dias', futuros.filter(a => a.data <= somaDias(7)).length],
+    ['Aguardando confirmação', futuros.filter(a => a.status === 'pendente').length],
+    ['Pelo assistente virtual', agenda.filter(a => a.origem === 'chat').length],
+    ['Total de agendamentos', agenda.length]
+  ].map(([l, n]) => `<div class="card"><b>${n}</b><span>${l}</span></div>`).join('');
+  let lista = agenda;
+  if (per === 'hoje') lista = lista.filter(a => a.data === h);
+  if (per === 'semana') lista = lista.filter(a => a.data >= h && a.data <= somaDias(7));
+  if (per === 'futuros') lista = lista.filter(a => a.data >= h);
+  if (per === 'todos') lista = [...lista].reverse();
+  if (st) lista = lista.filter(a => a.status === st);
+  if (q) lista = lista.filter(a => (a.nome + a.telefone).toLowerCase().includes(q));
+  const tipoNome = id => cfg.tiposAtendimento.find(t => t.id === id)?.nome || id;
+  const msg = a => `Olá, ${a.nome.split(' ')[0]}! Aqui é da Glamour Noivas 💍 Confirmando sua visita em ${fmt(a.data)} às ${a.hora} (${tipoNome(a.tipo)}). Podemos contar com você?`;
+  $('#tb-agenda').innerHTML = lista.length ? lista.map(a => `<tr>
+    <td data-l="Data"><b>${fmt(a.data)}</b> ${diaSemana(a.data)}<br>${a.hora}</td>
+    <td data-l="Cliente">${esc(a.nome)}<br><small>${esc(a.telefone)}</small></td>
+    <td data-l="Atendimento">${esc(tipoNome(a.tipo))}<br><small>${a.origem === 'chat' ? '🤖 assistente' : '🌐 site'} · #${a.id}</small></td>
+    <td data-l="Detalhes"><small>${a.dataEvento ? '💍 Evento: ' + fmt(a.dataEvento) + '<br>' : ''}${a.acompanhantes ? '👥 ' + a.acompanhantes + ' acomp.<br>' : ''}${a.interesse ? '❤️ ' + esc(a.interesse) + '<br>' : ''}${esc(a.observacoes)}</small></td>
+    <td data-l="Status"><span class="st ${a.status}">${a.status}</span></td>
+    <td data-l="Ações"><div class="acoes">
+      <a target="_blank" href="https://wa.me/55${a.telefone.replace(/^55/, '')}?text=${encodeURIComponent(msg(a))}">💬 WhatsApp</a>
+      ${['confirmado','concluido','faltou','cancelado'].filter(s => s !== a.status).map(s => `<button data-id="${a.id}" data-s="${s}">${s}</button>`).join('')}
+    </div></td></tr>`).join('') : '<tr><td colspan="6" class="vazio">Nenhum agendamento neste filtro.</td></tr>';
+}
+$('#tb-agenda').onclick = async e => {
+  const b = e.target.closest('button[data-s]'); if (!b) return;
+  if (b.dataset.s === 'cancelado' && !confirm('Cancelar este agendamento? O horário volta a ficar livre no site.')) return;
+  await api('/api/admin/agendamentos/' + b.dataset.id, { method: 'PATCH', body: JSON.stringify({ status: b.dataset.s }) });
+  carregarAgenda();
+};
+
+// ---------- catálogo ----------
+async function carregarCatalogo() {
+  catalogo = await api('/api/admin/catalogo');
+  $('#tb-cat').innerHTML = catalogo.map(i => `<tr><td data-l="Peça"><b>${esc(i.nome)}</b>${i.destaque ? ' ⭐' : ''}<br><small>${esc(i.estilo)} · ${esc(i.cor)}</small></td>
+    <td data-l="Categoria">${esc(i.categoria)}</td><td data-l="Tamanhos">${esc(i.tamanhos)}</td>
+    <td data-l="Ações"><div class="acoes"><button data-ed="${i.id}">editar</button><button data-del="${i.id}">remover</button></div></td></tr>`).join('');
+}
+$('#tb-cat').onclick = async e => {
+  const ed = e.target.dataset.ed, del = e.target.dataset.del;
+  if (ed) { const i = catalogo.find(x => x.id === ed), f = $('#f-item');
+    Object.entries(i).forEach(([k, v]) => { if (f[k]) f[k].type === 'checkbox' ? f[k].checked = v : f[k].value = v; }); f.scrollIntoView(); }
+  if (del && confirm('Remover esta peça do catálogo?')) { await api('/api/admin/catalogo/' + del, { method: 'DELETE' }); carregarCatalogo(); }
+};
+$('#f-item').onsubmit = async e => {
+  e.preventDefault(); const f = e.target;
+  const body = Object.fromEntries(new FormData(f)); body.destaque = f.destaque.checked;
+  const r = await api('/api/admin/catalogo', { method: 'POST', body: JSON.stringify(body) });
+  if (r.erro) return alert(r.erro);
+  f.reset(); f.id.value = ''; carregarCatalogo();
+};
+
+// ---------- bloqueios ----------
+async function carregarBloqueios() {
+  const { datasBloqueadas } = await api('/api/admin/bloqueios');
+  $('#lista-bloq').innerHTML = datasBloqueadas.length ? datasBloqueadas.map(d => `<p>🚫 ${fmt(d)} (${diaSemana(d)}) <button class="btn leve" data-desb="${d}">desbloquear</button></p>`).join('') : '<p class="vazio">Nenhuma data bloqueada.</p>';
+}
+$('#b-bloq').onclick = async () => { const d = $('#d-bloq').value; if (!d) return; await api('/api/admin/bloqueios', { method: 'POST', body: JSON.stringify({ data: d, bloquear: true }) }); carregarBloqueios(); };
+$('#lista-bloq').onclick = async e => { const d = e.target.dataset.desb; if (!d) return; await api('/api/admin/bloqueios', { method: 'POST', body: JSON.stringify({ data: d, bloquear: false }) }); carregarBloqueios(); };
+
+if (token) entrar();
+</script>
+</body>
+</html>
