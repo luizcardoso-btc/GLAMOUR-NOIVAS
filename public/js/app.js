@@ -101,7 +101,7 @@ function montarGaleria() {
   const fotos = App.catalogo.flatMap(i => (i.fotos || []).map(f => ({ f, nome: i.nome })));
   const sec = $('#galeria');
   if (!fotos.length) { sec.hidden = true; return; }
-  $('#galeria-fotos').innerHTML = fotos.map((x, n) => `<button data-n="${n}" aria-label="Ampliar foto do vestido ${esc(x.nome)}"><img src="${esc(x.f)}" alt="Vestido ${esc(x.nome)}" loading="lazy"></button>`).join('');
+  $('#galeria-fotos').innerHTML = fotos.map((x, n) => `<button data-n="${n}" aria-label="Ampliar foto do vestido ${esc(x.nome)}"><img src="${esc(x.f.replace(/\.webp$/, '-card.webp'))}" alt="Vestido ${esc(x.nome)}" loading="lazy"></button>`).join('');
   const LIM = 10;
   if (fotos.length > LIM) {
     $('#galeria-fotos').classList.add('recolhida');

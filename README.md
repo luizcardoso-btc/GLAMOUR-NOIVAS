@@ -73,3 +73,11 @@ public/js/app.js     catálogo e agendamento
 ```
 
 Veja **PLANO-ESTRATEGICO.md** (plano de crescimento) e **docs/KIT-EXECUCAO.md** (bio, WhatsApp, Google e calendário de posts prontos).
+
+## Fotos e marca d'água
+
+- `originais/vestidos/`: fotos tratadas **sem** logo (não aparecem no site; servem para refazer a marca).
+- `public/img/vestidos/`: fotos publicadas, **com** o monograma GN no canto inferior direito.
+- Para marcar fotos novas: coloque a versão tratada em `originais/vestidos/` e rode
+  `python3 ferramentas/marca-dagua.py` (precisa de Python com Pillow e NumPy).
+  Cada foto precisa da versão `-card.webp` (retrato 3:4), usada no catálogo e na galeria.
