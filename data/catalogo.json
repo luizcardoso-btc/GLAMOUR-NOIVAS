@@ -208,6 +208,103 @@
     "ativo": true
   },
   {
+    "id": "real-rubi",
+    "nome": "Rubi",
+    "categoria": "15 Anos",
+    "estilo": "Baile com pedrarias",
+    "tamanhos": "Consulte na loja",
+    "cor": "Vermelho",
+    "descricao": "Corpete coração todo cravejado de pedrarias, alças caídas em organza e saia de baile volumosa. Disponível também em numeração plus size.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/rubi-1-card.webp",
+    "fotos": [
+      "img/vestidos/rubi-1.webp",
+      "img/vestidos/rubi-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-escarlate",
+    "nome": "Escarlate",
+    "categoria": "15 Anos",
+    "estilo": "Princesa ombro a ombro",
+    "tamanhos": "Consulte na loja",
+    "cor": "Vermelho",
+    "descricao": "Decote ombro a ombro drapeado, corpete bordado com micro pérolas e saia ampla em tule com aplicações de renda.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/escarlate-1-card.webp",
+    "fotos": [
+      "img/vestidos/escarlate-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-safira",
+    "nome": "Safira",
+    "categoria": "15 Anos",
+    "estilo": "Princesa em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Azul royal",
+    "descricao": "Corpete drapeado com renda floral e pedrarias, mangas caídas rendadas e saia fluida em tule com brilho.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/safira-1-card.webp",
+    "fotos": [
+      "img/vestidos/safira-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-imperatriz",
+    "nome": "Imperatriz",
+    "categoria": "15 Anos",
+    "estilo": "Baile com babados",
+    "tamanhos": "Consulte na loja",
+    "cor": "Azul royal",
+    "descricao": "Renda bordada com pedrarias em todo o corpete, alças largas e saia de organza em camadas de babados.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/imperatriz-1-card.webp",
+    "fotos": [
+      "img/vestidos/imperatriz-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-agua-marinha",
+    "nome": "Água-Marinha",
+    "categoria": "15 Anos",
+    "estilo": "Baile com babados",
+    "tamanhos": "Consulte na loja",
+    "cor": "Verde-água",
+    "descricao": "Corpete com flores 3D e pérolas, mangas bufantes em organza e saia de babados em degradê verde-água.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/agua-marinha-1-card.webp",
+    "fotos": [
+      "img/vestidos/agua-marinha-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-serenata",
+    "nome": "Serenata",
+    "categoria": "15 Anos",
+    "estilo": "Baile em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Lilás azulado",
+    "descricao": "Corpete em renda com flores aplicadas e brilho, alças rendadas e saia de organza com babados em cascata.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/serenata-1-card.webp",
+    "fotos": [
+      "img/vestidos/serenata-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
     "id": "n01",
     "nome": "Aurora",
     "categoria": "Noivas",
