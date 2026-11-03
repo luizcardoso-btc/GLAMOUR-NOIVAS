@@ -74,6 +74,13 @@ public/js/app.js     catálogo e agendamento
 
 Veja **PLANO-ESTRATEGICO.md** (plano de crescimento) e **docs/KIT-EXECUCAO.md** (bio, WhatsApp, Google e calendário de posts prontos).
 
+## Domínio glamournoivasac.com.br
+
+O servidor já redireciona `www` → `glamournoivasac.com.br` e `http` → `https` (pode mudar com a variável `DOMINIO`).
+Ligação: Railway → serviço → Settings → Networking → **Custom Domain** para `glamournoivasac.com.br` e `www.glamournoivasac.com.br`;
+o Railway mostra os registros DNS (CNAME e TXT de verificação) a criar. Como o DNS do Registro.br não aceita CNAME no domínio raiz,
+use o Cloudflare (grátis) como DNS: ele faz o "CNAME flattening" no domínio raiz.
+
 ## Fotos e marca d'água
 
 - `originais/vestidos/`: fotos tratadas **sem** logo (não aparecem no site; servem para refazer a marca).

@@ -1,7 +1,7 @@
 # Kit de Execução: textos prontos para copiar e colar
 
-> Troque `[LINK]` pelo endereço do site quando ele estiver no ar (ex.: `glamournoivasac.com.br`).
-> Para levar a cliente direto ao agendamento, use `[LINK]/#agendar`.
+> Endereço oficial do site: **glamournoivasac.com.br**.
+> Para levar a cliente direto ao agendamento, use `glamournoivasac.com.br/#agendar`.
 
 ---
 
@@ -13,7 +13,7 @@
 ✨ Há 20+ anos realizando sonhos em Rio Branco
 📅 Agende sua prova 24h 👇
 ```
-Link da bio: `[LINK]/#agendar`
+Link da bio: `glamournoivasac.com.br/#agendar`
 
 ### Destaques (nome + capa na cor vinho/dourado)
 `Agendar` · `Noivas` · `15 Anos` · `Paletós` · `Cerimonial` · `Disse SIM` · `Dúvidas` · `Como chegar`
@@ -21,10 +21,10 @@ Link da bio: `[LINK]/#agendar`
 ### Respostas automáticas do direct (Configurações → Ferramentas comerciais → Respostas salvas / Perguntas frequentes)
 | Pergunta frequente | Resposta |
 |---|---|
-| Quanto custa? | Os valores variam conforme o modelo e a data 💕 Na visita mostramos opções para o seu orçamento, com parcelamento. Agende aqui: [LINK]/#agendar |
-| Como agendar? | É rapidinho e funciona 24h: [LINK]/#agendar. Se preferir, a Vitória, nossa assistente virtual, agenda pelo chat do site. |
+| Quanto custa? | Os valores variam conforme o modelo e a data 💕 Na visita mostramos opções para o seu orçamento, com parcelamento. Agende aqui: glamournoivasac.com.br/#agendar |
+| Como agendar? | É rapidinho e funciona 24h: glamournoivasac.com.br/#agendar. Se preferir, a Vitória, nossa assistente virtual, agenda pelo chat do site. |
 | Onde fica? | Rua Paulo VI, 196 – Isaura Parente, Rio Branco – AC. Mapa: [LINK MAPS] |
-| Tem 15 anos? | Temos! Vestidos de baile, troca, coroas e cerimonial completo 👑 [LINK]/#agendar |
+| Tem 15 anos? | Temos! Vestidos de baile, troca, coroas e cerimonial completo 👑 glamournoivasac.com.br/#agendar |
 
 ---
 
@@ -33,20 +33,20 @@ Link da bio: `[LINK]/#agendar`
 **Mensagem de saudação** (Ferramentas → Mensagem de saudação):
 ```
 Olá! 💍 Bem-vinda à Glamour Noivas, há mais de 20 anos realizando sonhos em Rio Branco.
-Para agendar sua visita a qualquer hora, é só acessar: [LINK]/#agendar
+Para agendar sua visita a qualquer hora, é só acessar: glamournoivasac.com.br/#agendar
 Já já uma de nossas consultoras te responde! ✨
 ```
 
 **Mensagem de ausência** (fora do horário):
 ```
-Oi! 🌙 Estamos fora do horário agora, mas você já pode garantir seu horário em [LINK]/#agendar
+Oi! 🌙 Estamos fora do horário agora, mas você já pode garantir seu horário em glamournoivasac.com.br/#agendar
 e tirar dúvidas com a Vitória, nossa assistente virtual 24h. Respondemos assim que abrirmos! 💕
 ```
 
 **Respostas rápidas** (digite `/` no chat):
 | Atalho | Texto |
 |---|---|
-| `/agendar` | Agende sua visita em [LINK]/#agendar. Você escolhe o dia e o horário que preferir 💕 |
+| `/agendar` | Agende sua visita em glamournoivasac.com.br/#agendar. Você escolhe o dia e o horário que preferir 💕 |
 | `/valores` | Os valores variam conforme o modelo e a data do evento. Na visita apresentamos as opções que cabem no seu orçamento, com parcelamento 😊 |
 | `/dicas` | Para a prova: traga uma lingerie cor da pele, o sapato com a altura que vai usar e até 3 acompanhantes ✨ |
 | `/posvisita` | Oi, [NOME]! Amamos te receber 💕 Ficou pensando no vestido [MODELO]? Ele ainda está disponível para a sua data. Quer que eu reserve? |
@@ -70,7 +70,7 @@ madrinhas e mães dos noivos, paletós e ternos adulto e infantil, além de véu
 todos os acessórios. Também realizamos o cerimonial completo de casamentos e festas de 15 anos.
 Atendimento exclusivo com hora marcada. Agende sua prova online, 24 horas por dia.
 ```
-- **Botão:** "Agendar" → `[LINK]/#agendar`
+- **Botão:** "Agendar" → `glamournoivasac.com.br/#agendar`
 - **Fotos:** fachada, provador, araras, 10+ vestidos, noivas reais (com autorização), equipe.
 - **Postagem semanal:** reaproveitar o melhor post da semana do Instagram.
 

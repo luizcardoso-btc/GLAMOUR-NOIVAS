@@ -6,6 +6,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
+const DOMINIO = (process.env.DOMINIO || 'glamournoivasac.com.br').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'glamour2026';
 // Configuração da loja e catálogo inicial vêm do código (pasta data/).
 // Dados que mudam com o uso (agendamentos, catálogo editado, folgas, perguntas) ficam em DATA_DIR.
@@ -63,7 +64,7 @@ function save(name, value) {
 // ---------- utilidades ----------
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'application/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json' };
+  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8' };
 
 function send(res, status, body, headers = {}) {
   const isObj = typeof body === 'object' && !Buffer.isBuffer(body);
@@ -288,6 +289,15 @@ http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // domínio oficial: www → sem www, e http → https (o Railway informa o protocolo original no x-forwarded-proto)
+  const host = String(req.headers.host || '').toLowerCase().split(':')[0];
+  if (host.endsWith(DOMINIO) && url.pathname !== '/api/health') {
+    const proto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+    if (host !== DOMINIO || proto === 'http') {
+      res.writeHead(301, { Location: `https://${DOMINIO}${req.url}` }); return res.end();
+    }
+    res.setHeader('Strict-Transport-Security', 'max-age=15552000');
+  }
   try {
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     serveStatic(req, res, url);
