@@ -36,7 +36,7 @@
   function saudacao() {
     const h = horaAcre().getUTCHours();
     const oi = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-    bot(`${oi}. Eu sou a Vitória, assistente virtual da Glamour Noivas.\n\nPosso esclarecer suas dúvidas e reservar a sua visita agora mesmo, a qualquer hora. Como posso ajudar?`);
+    bot(`${oi}. Eu sou a Vitória, assistente virtual da Glamour Noivas. Há mais de vinte anos e mais de 3 mil noivas vestidas em Rio Branco.\n\nPosso esclarecer suas dúvidas e reservar a sua visita agora mesmo, a qualquer hora. Como posso ajudar?`);
   }
 
   // ---------- interpretação de datas em português ----------
