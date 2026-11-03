@@ -93,7 +93,31 @@ function renderCatalogo(cat) {
         <button class="provar" data-id="${esc(i.id)}">Quero provar este modelo</button>
       </div>
     </article>`).join('') : '<p class="sub">Nenhum favorito por enquanto. Toque no coração dos modelos que encantarem você.</p>';
+  $('#grade-catalogo').scrollLeft = 0; requestAnimationFrame(atualizarCarrossel);
 }
+// ---------- carrossel da coleção (celular) ----------
+function carrosselAtivo() { return getComputedStyle($('#grade-catalogo')).display === 'flex'; }
+function atualizarCarrossel() {
+  const g = $('#grade-catalogo'), cards = g.querySelectorAll('.peca'), n = cards.length;
+  $('#nav-catalogo').hidden = !carrosselAtivo() || n < 2;
+  if (!n) return;
+  const passo = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : g.clientWidth;
+  const atual = Math.min(n, Math.round(g.scrollLeft / passo) + 1);
+  $('#car-contador').textContent = `${atual} / ${n}`;
+  $('#car-barra').style.width = `${(atual / n) * 100}%`;
+  document.querySelectorAll('.car-seta')[0].disabled = atual <= 1;
+  document.querySelectorAll('.car-seta')[1].disabled = atual >= n;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const g = $('#grade-catalogo'); let t;
+  g.addEventListener('scroll', () => { cancelAnimationFrame(t); t = requestAnimationFrame(atualizarCarrossel); }, { passive: true });
+  document.querySelectorAll('.car-seta').forEach(b => b.addEventListener('click', () => {
+    const c = g.querySelectorAll('.peca'); const passo = c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : g.clientWidth;
+    g.scrollBy({ left: passo * +b.dataset.dir, behavior: 'smooth' });
+  }));
+  addEventListener('resize', atualizarCarrossel);
+});
+
 function atualizarResumoFavs() {
   const nomes = App.catalogo.filter(i => App.favoritos.has(i.id)).map(i => i.nome);
   $('#fav-resumo').textContent = nomes.length ? `Seus favoritos seguirão com o agendamento: ${nomes.join(', ')}` : '';

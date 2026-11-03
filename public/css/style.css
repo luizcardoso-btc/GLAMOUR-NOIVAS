@@ -351,3 +351,33 @@ label{font-family:var(--sans);font-weight:500;letter-spacing:.02em}
 .menu-btn span{display:block;height:1.5px;background:var(--texto);border-radius:2px}
 @media (max-width:860px){.menu-btn{display:flex}}
 @media (max-width:520px){h1 em{font-size:1.18em}body{font-size:16px}}
+
+/* =========================================================
+   COLEÇÃO EM CARROSSEL NO CELULAR
+   ========================================================= */
+.carrossel-nav{display:none}
+@media (max-width:860px){
+  #catalogo{--g:clamp(16px,5vw,64px)}
+  .filtros{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1*var(--g)) 22px;padding:2px var(--g) 6px}
+  .filtros::-webkit-scrollbar{display:none}
+  .filtros button{flex:0 0 auto}
+  .grade-catalogo{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--g);
+    margin:0 calc(-1*var(--g));padding:6px var(--g) 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .grade-catalogo::-webkit-scrollbar{display:none}
+  .grade-catalogo .peca{flex:0 0 78%;max-width:330px;scroll-snap-align:start}
+  .grade-catalogo > .sub{flex:1 0 100%}
+  .peca p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .peca .info{padding:14px 16px 18px}
+  .carrossel-nav{display:flex;align-items:center;gap:12px;max-width:420px;margin:6px auto 0}
+  .carrossel-nav[hidden]{display:none}
+  .car-seta{width:40px;height:40px;flex:0 0 40px;border-radius:50%;border:1px solid var(--ouro);background:#fff;color:var(--ouro-texto);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .car-seta:disabled{opacity:.35;cursor:default}
+  .car-progresso{flex:1;height:2px;background:var(--rose-forte);border-radius:2px;overflow:hidden}
+  .car-progresso span{display:block;height:100%;width:0;background:var(--ouro-grad);transition:width .3s}
+  .car-contador{font-family:var(--caps);font-size:.72rem;letter-spacing:.18em;color:var(--ouro-texto);min-width:58px;text-align:center}
+}
+@media (max-width:860px){
+  .grade-catalogo .peca p{flex:none;max-height:calc(1.65em * 3)}
+  .grade-catalogo .peca .tam{margin-top:auto}
+  .galeria{grid-template-columns:repeat(2,1fr);gap:10px}
+}
