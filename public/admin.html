@@ -6,12 +6,12 @@
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#f8dfe6"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>Painel · Glamour Noivas</title>
 <link rel="icon" href="img/logo/icone-32.png" type="image/png"><link rel="apple-touch-icon" href="img/logo/icone-180.png">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--vinho:#4a3a3e;--ouro:#c9971c;--creme:#fcedf1;--marfim:#fff;--suave:#7a6a6f;--rose:#f8dfe6;--rose-forte:#eeb8c7;--ouro-texto:#8c640a;--ouro-grad:linear-gradient(135deg,#a8770f 0%,#d4a632 28%,#f7df8a 50%,#d4a632 72%,#a8770f 100%)}
-*{box-sizing:border-box}body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:#fdf6f8;color:#2b2226;font-size:15px}
+*{box-sizing:border-box}body{margin:0;font-family:Jost,system-ui,sans-serif;background:#fdf6f8;color:#2b2226;font-size:15px}
 header{background:linear-gradient(120deg,var(--rose),var(--rose-forte));color:var(--vinho);border-bottom:3px solid var(--ouro);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-header h1{font-family:'Cormorant Garamond',serif;margin:0;font-size:1.6rem}
+header h1{font-family:'Bodoni Moda',serif;margin:0;font-size:1.6rem}
 nav{display:flex;gap:6px;flex-wrap:wrap}nav button{background:#fff;border:1px solid var(--rose-forte);color:var(--vinho);border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit}
 nav button.ativo{background:var(--ouro-grad);border-color:transparent;color:#3a2905;font-weight:600}
 main{padding:20px;max-width:1200px;margin:0 auto}
@@ -44,7 +44,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
 
 <div id="painel" hidden>
 <header><h1 style="display:flex;align-items:center;gap:10px"><img src="img/logo/monograma-240.png" alt="" style="height:38px">Painel da loja</h1>
-  <nav><button data-aba="agenda" class="ativo">📅 Agenda</button><button data-aba="catalogo">👗 Catálogo</button><button data-aba="bloqueios">🚫 Folgas</button><button data-aba="gabi">🤖 Vitória <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
+  <nav><button data-aba="agenda" class="ativo">Agenda</button><button data-aba="catalogo">Coleção</button><button data-aba="bloqueios">Folgas</button><button data-aba="gabi">Perguntas <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
 </header>
 <main>
   <section id="aba-agenda">
@@ -53,8 +53,8 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
       <select id="f-periodo"><option value="hoje">Hoje</option><option value="amanha">Amanhã (lembretes)</option><option value="semana" selected>Próximos 7 dias</option><option value="futuros">Todos os próximos</option><option value="todos">Histórico completo</option></select>
       <select id="f-status"><option value="">Todos os status</option><option>pendente</option><option>confirmado</option><option>concluido</option><option>fechou</option><option>cancelado</option><option>faltou</option></select>
       <input id="f-busca" placeholder="Buscar nome ou telefone">
-      <a class="btn leve" id="csv">⬇ Exportar planilha</a>
-      <button class="btn leve" id="atualizar">↻ Atualizar</button>
+      <a class="btn leve" id="csv">Exportar planilha</a>
+      <button class="btn leve" id="atualizar">Atualizar</button>
     </div>
     <table><thead><tr><th>Data</th><th>Cliente</th><th>Atendimento</th><th>Detalhes</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tb-agenda"></tbody></table>
   </section>
@@ -78,7 +78,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
   </section>
 
   <section id="aba-gabi" hidden>
-    <p>Perguntas que clientes fizeram e a assistente <b>não soube responder</b>. Use para criar novas respostas em <code>data/config.json → faq</code>.</p>
+    <p>Perguntas que clientes fizeram e a assistente <b>não soube responder</b>. Use para criar novas respostas em <code>data/config.json, na parte "faq"</code>.</p>
     <div class="barra"><button class="btn leve" id="limpar-perg">Limpar lista</button></div>
     <table><thead><tr><th>Quando</th><th>Pergunta</th></tr></thead><tbody id="tb-perg"></tbody></table>
   </section>
@@ -152,16 +152,16 @@ function renderAgenda() {
   if (st) lista = lista.filter(a => a.status === st);
   if (q) lista = lista.filter(a => (a.nome + a.telefone).toLowerCase().includes(q));
   const tipoNome = id => cfg.tiposAtendimento.find(t => t.id === id)?.nome || id;
-  const lembrete = a => `Oi, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas 💍 Passando para lembrar da sua visita *amanhã (${fmt(a.data)}) às ${a.hora}* na loja (Rua Paulo VI, 196 – Isaura Parente). Dica: traga uma lingerie cor da pele e o sapato do evento. Até lá! ✨`;
-  const msg = a => a.data === somaDias(1) ? lembrete(a) : `Olá, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas 💍 Confirmando sua visita em ${fmt(a.data)} às ${a.hora} (${tipoNome(a.tipo)}). Podemos contar com você?`;
+  const lembrete = a => `Oi, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas. Passando para lembrar da sua visita *amanhã (${fmt(a.data)}) às ${a.hora}* na loja (Rua Paulo VI, 196 – Isaura Parente). Dica: traga uma lingerie cor da pele e o sapato do evento. Até lá.`;
+  const msg = a => a.data === somaDias(1) ? lembrete(a) : `Olá, ${a.nome.split(' ')[0]}! Aqui é a Vitória, da Glamour Noivas. Confirmando sua visita em ${fmt(a.data)} às ${a.hora} (${tipoNome(a.tipo)}). Podemos contar com a sua presença?`;
   $('#tb-agenda').innerHTML = lista.length ? lista.map(a => `<tr>
     <td data-l="Data"><b>${fmt(a.data)}</b> ${diaSemana(a.data)}<br>${a.hora}</td>
     <td data-l="Cliente">${esc(a.nome)}<br><small>${esc(a.telefone)}</small></td>
-    <td data-l="Atendimento">${esc(tipoNome(a.tipo))}<br><small>${a.origem === 'chat' ? '🤖 assistente' : '🌐 site'} · #${a.id}</small></td>
-    <td data-l="Detalhes"><small>${a.dataEvento ? '💍 Evento: ' + fmt(a.dataEvento) + '<br>' : ''}${a.acompanhantes ? '👥 ' + a.acompanhantes + ' acomp.<br>' : ''}${a.interesse ? '❤️ ' + esc(a.interesse) + '<br>' : ''}${esc(a.observacoes)}</small></td>
+    <td data-l="Atendimento">${esc(tipoNome(a.tipo))}<br><small>${a.origem === 'chat' ? 'assistente' : 'site'} · #${a.id}</small></td>
+    <td data-l="Detalhes"><small>${a.dataEvento ? 'Evento: ' + fmt(a.dataEvento) + '<br>' : ''}${a.acompanhantes ? 'Acompanhantes: ' + a.acompanhantes + '<br>' : ''}${a.interesse ? 'Favoritos: ' + esc(a.interesse) + '<br>' : ''}${esc(a.observacoes)}</small></td>
     <td data-l="Status"><span class="st ${a.status}">${a.status}</span></td>
     <td data-l="Ações"><div class="acoes">
-      <a target="_blank" href="https://wa.me/55${a.telefone.replace(/^55/, '')}?text=${encodeURIComponent(msg(a))}">💬 ${a.data === somaDias(1) ? 'Lembrete' : 'WhatsApp'}</a>
+      <a target="_blank" href="https://wa.me/55${a.telefone.replace(/^55/, '')}?text=${encodeURIComponent(msg(a))}">${a.data === somaDias(1) ? 'Lembrete' : 'WhatsApp'}</a>
       ${['confirmado','concluido','fechou','faltou','cancelado'].filter(s => s !== a.status).map(s => `<button data-id="${a.id}" data-s="${s}">${s}</button>`).join('')}
     </div></td></tr>`).join('') : '<tr><td colspan="6" class="vazio">Nenhum agendamento neste filtro.</td></tr>';
 }
@@ -175,7 +175,7 @@ $('#tb-agenda').onclick = async e => {
 // ---------- catálogo ----------
 async function carregarCatalogo() {
   catalogo = await api('/api/admin/catalogo');
-  $('#tb-cat').innerHTML = catalogo.map(i => `<tr><td data-l="Peça"><b>${esc(i.nome)}</b>${i.destaque ? ' ⭐' : ''}<br><small>${esc(i.estilo)} · ${esc(i.cor)}</small></td>
+  $('#tb-cat').innerHTML = catalogo.map(i => `<tr><td data-l="Peça"><b>${esc(i.nome)}</b>${i.destaque ? ' <small>(destaque)</small>' : ''}<br><small>${esc(i.estilo)} · ${esc(i.cor)}</small></td>
     <td data-l="Categoria">${esc(i.categoria)}</td><td data-l="Tamanhos">${esc(i.tamanhos)}</td>
     <td data-l="Ações"><div class="acoes"><button data-ed="${i.id}">editar</button><button data-del="${i.id}">remover</button></div></td></tr>`).join('');
 }
@@ -197,14 +197,14 @@ $('#f-item').onsubmit = async e => {
 async function carregarPerguntas() {
   const lista = await api('/api/admin/perguntas');
   $('#n-perg').textContent = lista.length ? `(${lista.length})` : '';
-  $('#tb-perg').innerHTML = lista.length ? lista.map(q => `<tr><td data-l="Quando">${new Date(q.em).toLocaleString('pt-BR', { timeZone: 'America/Rio_Branco' })}</td><td data-l="Pergunta">${esc(q.texto)}</td></tr>`).join('') : '<tr><td colspan="2" class="vazio">Nenhuma pergunta sem resposta. 🎉</td></tr>';
+  $('#tb-perg').innerHTML = lista.length ? lista.map(q => `<tr><td data-l="Quando">${new Date(q.em).toLocaleString('pt-BR', { timeZone: 'America/Rio_Branco' })}</td><td data-l="Pergunta">${esc(q.texto)}</td></tr>`).join('') : '<tr><td colspan="2" class="vazio">Nenhuma pergunta sem resposta.</td></tr>';
 }
 $('#limpar-perg').onclick = async () => { if (confirm('Limpar a lista?')) { await api('/api/admin/perguntas', { method: 'DELETE' }); carregarPerguntas(); } };
 
 // ---------- bloqueios ----------
 async function carregarBloqueios() {
   const { datasBloqueadas } = await api('/api/admin/bloqueios');
-  $('#lista-bloq').innerHTML = datasBloqueadas.length ? datasBloqueadas.map(d => `<p>🚫 ${fmt(d)} (${diaSemana(d)}) <button class="btn leve" data-desb="${d}">desbloquear</button></p>`).join('') : '<p class="vazio">Nenhuma data bloqueada.</p>';
+  $('#lista-bloq').innerHTML = datasBloqueadas.length ? datasBloqueadas.map(d => `<p>${fmt(d)} (${diaSemana(d)}) <button class="btn leve" data-desb="${d}">desbloquear</button></p>`).join('') : '<p class="vazio">Nenhuma data bloqueada.</p>';
 }
 $('#b-bloq').onclick = async () => { const d = $('#d-bloq').value; if (!d) return; await api('/api/admin/bloqueios', { method: 'POST', body: JSON.stringify({ data: d, bloquear: true }) }); carregarBloqueios(); };
 $('#lista-bloq').onclick = async e => { const d = e.target.dataset.desb; if (!d) return; await api('/api/admin/bloqueios', { method: 'POST', body: JSON.stringify({ data: d, bloquear: false }) }); carregarBloqueios(); };

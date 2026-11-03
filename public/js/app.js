@@ -1,6 +1,9 @@
 // Glamour Noivas — site público
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ICONES = {"vestido": "<path d=\"M9 3h6l-1 4 3 3-1 2 5 9H3l5-9-1-2 3-3z\"/>", "coroa": "<path d=\"M3 18l1.5-10 5 5L12 5l2.5 8 5-5L21 18z\"/><path d=\"M3 21h18\"/>", "paleto": "<path d=\"M8 3l4 4 4-4 4 2 1 16H3L4 5z\"/><path d=\"M12 7v14M9.5 12h-2M12 7l-2 5 2 2 2-2-2-5\"/>", "joia": "<path d=\"M6 3h12l3 6-9 12L3 9z\"/><path d=\"M3 9h18M9 3l3 18 3-18\"/>", "laco": "<path d=\"M12 11c-3-5-9-6-9-2s6 4 9 2zm0 0c3-5 9-6 9-2s-6 4-9 2z\"/><path d=\"M12 11l-4 10M12 11l4 10\"/>", "agulha": "<path d=\"M20 4L6 18\"/><ellipse cx=\"18\" cy=\"6\" rx=\"1\" ry=\"2.2\" transform=\"rotate(45 18 6)\"/><path d=\"M6 18c-2 1-3 2-3 3M14 3c-4 0-6 3-5 6s5 4 4 8-5 4-8 3\"/>"};
+const CORACAO_OFF = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
+const CORACAO_ON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
 const App = { config: null, catalogo: [], favoritos: new Set(JSON.parse(localStorage.getItem('gn-favs') || '[]')) };
 window.GN = App;
 
@@ -21,7 +24,7 @@ async function init() {
   App.config = config; App.catalogo = catalogo;
   const l = config.loja;
 
-  $('#lista-servicos').innerHTML = config.servicos.map(s => `<article class="servico"><div class="ic">${s.icone}</div><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p></article>`).join('');
+  $('#lista-servicos').innerHTML = config.servicos.map(s => `<article class="servico"><div class="ic">${ICONES[s.icone] ? `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${ICONES[s.icone]}</svg>` : ''}</div><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p></article>`).join('');
   $('#depoimentos').innerHTML = config.depoimentos.map(d => `<blockquote>“${esc(d.texto)}”<cite>${esc(d.nome)} · ${esc(d.evento)}</cite></blockquote>`).join('');
   $('#lista-faq').innerHTML = config.faq.map(f => `<details><summary>${esc(f.pergunta)}</summary><p>${esc(App.preencher(f.resposta))}</p></details>`).join('');
   $('#rod-endereco').textContent = l.endereco;
@@ -40,8 +43,8 @@ App.preencher = txt => txt.replace(/\{(\w+)\}/g, (_, k) => App.config.loja[k] ??
 
 // ---------- catálogo ----------
 function montarCatalogo() {
-  const cats = ['Todos', 'Favoritos ❤️', ...new Set(App.catalogo.map(i => i.categoria))];
-  $('#filtros').innerHTML = cats.map((c, i) => `<button role="tab" aria-selected="${i === 0}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  const cats = ['Todos', 'Favoritos', ...new Set(App.catalogo.map(i => i.categoria))];
+  $('#filtros').innerHTML = cats.map((c, i) => `<button role="tab" aria-selected="${i === 0}" data-cat="${esc(c)}">${esc(c === '15 Anos' ? 'Debutantes' : c === 'Paletós' ? 'Trajes masculinos' : c)}</button>`).join('');
   $('#filtros').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
     $('#filtros').querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
@@ -53,7 +56,7 @@ function montarCatalogo() {
       const id = fav.dataset.id;
       App.favoritos.has(id) ? App.favoritos.delete(id) : App.favoritos.add(id);
       localStorage.setItem('gn-favs', JSON.stringify([...App.favoritos]));
-      fav.textContent = App.favoritos.has(id) ? '❤️' : '🤍';
+      fav.innerHTML = App.favoritos.has(id) ? CORACAO_ON : CORACAO_OFF; fav.classList.toggle('on', App.favoritos.has(id));
       atualizarResumoFavs();
     }
     const zoom = e.target.closest('[data-zoom]');
@@ -73,27 +76,27 @@ function montarCatalogo() {
 }
 function renderCatalogo(cat) {
   let itens = App.catalogo;
-  if (cat === 'Favoritos ❤️') itens = itens.filter(i => App.favoritos.has(i.id));
+  if (cat === 'Favoritos') itens = itens.filter(i => App.favoritos.has(i.id));
   else if (cat !== 'Todos') itens = itens.filter(i => i.categoria === cat);
   itens = [...itens].sort((a, b) => b.destaque - a.destaque);
   $('#grade-catalogo').innerHTML = itens.length ? itens.map(i => `
     <article class="peca">
       <div class="foto">${i.imagem ? `<img src="${esc(i.imagem)}" alt="Vestido ${esc(i.nome)}" loading="lazy" data-zoom="${esc(i.id)}">` : silhueta(i.categoria)}</div>
       ${i.destaque ? '<span class="selo">DESTAQUE</span>' : ''}
-      ${(i.fotos || []).length > 1 ? `<span class="nfotos">📷 ${i.fotos.length} fotos</span>` : ''}
-      <button class="fav" data-id="${esc(i.id)}" aria-label="Favoritar ${esc(i.nome)}">${App.favoritos.has(i.id) ? '❤️' : '🤍'}</button>
+      ${(i.fotos || []).length > 1 ? `<span class="nfotos">${i.fotos.length} fotos</span>` : ''}
+      <button class="fav${App.favoritos.has(i.id) ? ' on' : ''}" data-id="${esc(i.id)}" aria-label="Marcar ${esc(i.nome)} como favorito">${App.favoritos.has(i.id) ? CORACAO_ON : CORACAO_OFF}</button>
       <div class="info">
         <h3>${esc(i.nome)}</h3>
         <div class="meta">${esc(i.categoria)} · ${esc(i.estilo)}</div>
         <p>${esc(i.descricao)}</p>
         <div class="tam">Tamanhos: ${esc(i.tamanhos)} · ${esc(i.cor)}<br>${esc(i.modalidade)}</div>
-        <button class="provar" data-id="${esc(i.id)}">Quero provar →</button>
+        <button class="provar" data-id="${esc(i.id)}">Quero provar este modelo</button>
       </div>
-    </article>`).join('') : '<p class="sub">Nenhum item aqui ainda. Toque no 🤍 dos modelos que você amar.</p>';
+    </article>`).join('') : '<p class="sub">Nenhum favorito por enquanto. Toque no coração dos modelos que encantarem você.</p>';
 }
 function atualizarResumoFavs() {
   const nomes = App.catalogo.filter(i => App.favoritos.has(i.id)).map(i => i.nome);
-  $('#fav-resumo').textContent = nomes.length ? `❤️ Seus favoritos irão no agendamento: ${nomes.join(', ')}` : '';
+  $('#fav-resumo').textContent = nomes.length ? `Seus favoritos seguirão com o agendamento: ${nomes.join(', ')}` : '';
 }
 
 // ---------- galeria e fotos ampliadas ----------
@@ -167,20 +170,20 @@ function montarAgendamento() {
 
 async function carregarHorarios(data) {
   horaEscolhida = null;
-  $('#horarios').innerHTML = '<p class="dica">Carregando…</p>';
+  $('#horarios').innerHTML = '<p class="dica">Consultando horários…</p>';
   const r = await fetch('/api/horarios?data=' + data).then(r => r.json());
-  if (r.fechado || !r.horarios?.length) { $('#horarios').innerHTML = `<p class="dica">${esc(r.motivo || r.erro || 'Sem horários neste dia')}. Tente outra data.</p>`; return; }
+  if (r.fechado || !r.horarios?.length) { $('#horarios').innerHTML = `<p class="dica">${esc(r.motivo || r.erro || 'Não há horários neste dia')}. Escolha outra data, por favor.</p>`; return; }
   const livres = r.horarios.filter(h => h.disponivel).length;
   $('#horarios').innerHTML = r.horarios.map(h => `<button data-hora="${h.hora}" ${h.disponivel ? '' : 'disabled'}>${h.hora}</button>`).join('') +
-    (livres ? '' : '<p class="dica">Dia lotado 😔 Escolha outra data.</p>');
+    (livres ? '' : '<p class="dica">Todos os horários deste dia já foram reservados. Escolha outra data.</p>');
 }
 
 async function enviarAgendamento(e) {
   e.preventDefault();
   const erro = $('#ag-erro'); erro.textContent = '';
   const tipo = document.querySelector('input[name=tipo]:checked')?.value;
-  if (!tipo) return erro.textContent = 'Escolha o que você procura.';
-  if (!$('#ag-data').value || !horaEscolhida) return erro.textContent = 'Escolha a data e o horário.';
+  if (!tipo) return erro.textContent = 'Escolha o tipo de atendimento.';
+  if (!$('#ag-data').value || !horaEscolhida) return erro.textContent = 'Escolha a data e o horário da visita.';
   const favs = App.catalogo.filter(i => App.favoritos.has(i.id)).map(i => i.nome).join(', ');
   const body = { tipo, data: $('#ag-data').value, hora: horaEscolhida, nome: $('#ag-nome').value, telefone: $('#ag-tel').value,
     dataEvento: $('#ag-evento').value, acompanhantes: $('#ag-acomp').value, interesse: favs, observacoes: $('#ag-obs').value };
@@ -190,29 +193,29 @@ async function enviarAgendamento(e) {
     const ag = await r.json();
     if (!r.ok) { erro.textContent = ag.erro; if (r.status === 409) carregarHorarios(body.data); return; }
     mostrarSucesso(ag);
-  } catch { erro.textContent = 'Sem conexão. Tente novamente ou chame no WhatsApp.'; }
+  } catch { erro.textContent = 'Não foi possível enviar agora. Tente novamente ou fale conosco pelo WhatsApp.'; }
   finally { btn.disabled = false; btn.textContent = 'Confirmar agendamento'; }
 }
 
 App.textoConfirmacao = ag => {
   const tipo = App.config.tiposAtendimento.find(t => t.id === ag.tipo)?.nome || ag.tipo;
   const [a, m, d] = ag.data.split('-');
-  return `Olá! Acabei de agendar pelo site da Glamour Noivas 💍\n\n*Código:* ${ag.id}\n*Nome:* ${ag.nome}\n*Atendimento:* ${tipo}\n*Dia:* ${d}/${m}/${a} às ${ag.hora}` +
+  return `Olá! Acabei de agendar uma visita pelo site da Glamour Noivas.\n\n*Código:* ${ag.id}\n*Nome:* ${ag.nome}\n*Atendimento:* ${tipo}\n*Dia:* ${d}/${m}/${a} às ${ag.hora}` +
     (ag.dataEvento ? `\n*Data do evento:* ${ag.dataEvento.split('-').reverse().join('/')}` : '') +
-    (ag.interesse ? `\n*Favoritos:* ${ag.interesse}` : '') + `\n\nPodem confirmar, por favor?`;
+    (ag.interesse ? `\n*Favoritos:* ${ag.interesse}` : '') + `\n\nPoderiam confirmar, por favor?`;
 };
 
 function mostrarSucesso(ag) {
   const [a, m, d] = ag.data.split('-');
   $('#form-agendar').hidden = true;
   const s = $('#ag-sucesso'); s.hidden = false;
-  s.innerHTML = `<h3>Agendamento recebido! 💍</h3>
+  s.innerHTML = `<h3>Agendamento recebido</h3>
     <p>${esc(ag.nome.split(' ')[0])}, reservamos <strong>${d}/${m}/${a} às ${ag.hora}</strong> para você.</p>
     <p>Código: <span class="cod">${ag.id}</span></p>
     <p>Para garantir, envie a confirmação no nosso WhatsApp:</p>
     <a class="btn btn-ouro" target="_blank" rel="noopener" href="${whatsLink(App.textoConfirmacao(ag))}">Confirmar pelo WhatsApp</a>
-    <p><button class="btn-texto" style="color:var(--ouro-texto)" onclick="GN.baixarIcs(${esc(JSON.stringify(ag)).replace(/"/g, '&quot;')})">📅 Salvar na agenda do celular</button></p>
-    <p class="pequeno" style="margin-top:18px">Dica: traga uma lingerie cor da pele e o sapato com a altura que pretende usar.</p>`;
+    <p><button class="btn-texto" style="color:var(--ouro-texto)" onclick="GN.baixarIcs(${esc(JSON.stringify(ag)).replace(/"/g, '&quot;')})">Salvar na agenda do celular</button></p>
+    <p class="pequeno" style="margin-top:18px">Para a prova, venha com lingerie cor da pele e, se possível, traga o sapato com a altura que pretende usar.</p>`;
   s.scrollIntoView({ block: 'center' });
 }
 
@@ -235,7 +238,7 @@ App.baixarIcs = ag => {
 };
 
 // ---------- consulta / cancelamento pela cliente ----------
-const STATUS_TXT = { pendente: 'Aguardando confirmação', confirmado: 'Confirmado ✅', concluido: 'Visita realizada', fechou: 'Contrato fechado 💍', cancelado: 'Cancelado', faltou: 'Não compareceu' };
+const STATUS_TXT = { pendente: 'Aguardando confirmação', confirmado: 'Confirmado', concluido: 'Visita realizada', fechou: 'Contrato fechado', cancelado: 'Cancelado', faltou: 'Não compareceu' };
 async function consultar(acao) {
   const body = { id: $('#mc-id').value.trim(), telefone: $('#mc-tel').value, acao };
   const r = await fetch('/api/meu-agendamento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -243,9 +246,9 @@ async function consultar(acao) {
   if (!r.ok) { out.innerHTML = `<p class="erro" style="color:#a33">${esc(ag.erro)}</p>`; return; }
   const tipo = App.config.tiposAtendimento.find(t => t.id === ag.tipo)?.nome || ag.tipo;
   const futuro = ag.data >= hojeAcre() && ag.status !== 'cancelado';
-  out.innerHTML = `<div class="mc-card"><h3>${esc(ag.nome.split(' ')[0])}, ${acao === 'cancelar' ? 'seu horário foi cancelado.' : 'aqui está seu agendamento'}</h3>
+  out.innerHTML = `<div class="mc-card"><h3>${esc(ag.nome.split(' ')[0])}, ${acao === 'cancelar' ? 'seu horário foi cancelado.' : 'este é o seu agendamento'}</h3>
     <p><strong>${ag.data.split('-').reverse().join('/')} às ${ag.hora}</strong><br>${esc(tipo)}<br>Status: ${STATUS_TXT[ag.status] || ag.status}</p>
-    ${futuro ? `<div class="acoes"><button class="btn btn-ouro" id="mc-ics">📅 Salvar na agenda</button>
+    ${futuro ? `<div class="acoes"><button class="btn btn-ouro" id="mc-ics">Salvar na agenda</button>
       <a class="btn btn-linha" target="_blank" rel="noopener" href="${whatsLink(`Olá! Quero remarcar meu agendamento ${ag.id}.`)}">Remarcar</a></div>
       <p><button class="btn-texto" id="mc-cancelar">Cancelar este horário</button></p>` :
       acao === 'cancelar' ? `<p><a class="btn btn-ouro" href="#agendar">Escolher novo horário</a></p>` : ''}</div>`;
