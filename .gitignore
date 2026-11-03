@@ -4,3 +4,4 @@ node_modules/
 data/agendamentos.json
 data/perguntas.json
 data/bloqueios.json
+data/fin-*.json

@@ -81,3 +81,9 @@ Veja **PLANO-ESTRATEGICO.md** (plano de crescimento) e **docs/KIT-EXECUCAO.md** 
 - Para marcar fotos novas: coloque a versão tratada em `originais/vestidos/` e rode
   `python3 ferramentas/marca-dagua.py` (precisa de Python com Pillow e NumPy).
   Cada foto precisa da versão `-card.webp` (retrato 3:4), usada no catálogo e na galeria.
+
+## Financeiro (contador virtual)
+
+Aba **Financeiro** do painel: lançamentos (contas a pagar e a receber), contratos com parcelas automáticas e bloqueio de peças por data,
+acervo como patrimônio (custo, depreciação, retorno por peça), DRE, balanço patrimonial, fluxo de caixa projetado, simulador e backup.
+Os dados ficam em `fin-*.json` na pasta de dados (volume `/data` no Railway).

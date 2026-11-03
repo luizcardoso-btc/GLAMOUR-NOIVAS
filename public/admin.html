@@ -14,7 +14,7 @@ header{background:linear-gradient(120deg,var(--rose),var(--rose-forte));color:va
 header h1{font-family:'Cormorant Garamond',serif;margin:0;font-size:1.6rem}
 nav{display:flex;gap:6px;flex-wrap:wrap}nav button{background:#fff;border:1px solid var(--rose-forte);color:var(--vinho);border-radius:999px;padding:7px 14px;cursor:pointer;font:inherit}
 nav button.ativo{background:var(--ouro-grad);border-color:transparent;color:#3a2905;font-weight:600}
-main{padding:20px;max-width:1200px;margin:0 auto}
+main{padding:20px;max-width:1280px;margin:0 auto}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
 .card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 14px rgba(176,86,111,.1)}.card b{display:block;font-size:1.8rem;color:var(--vinho)}.card span{color:var(--suave);font-size:.85rem}
 .barra{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
@@ -33,6 +33,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
 .vazio{text-align:center;color:var(--suave);padding:30px}
 @media(max-width:760px){table,thead,tbody,tr,td{display:block}thead{display:none}tr{border-bottom:6px solid var(--marfim)}td{border:0;padding:6px 12px}td::before{content:attr(data-l);display:block;font-size:.7rem;color:var(--suave);text-transform:uppercase}}
 </style>
+<link rel="stylesheet" href="css/financeiro.css">
 </head>
 <body>
 <div id="tela-login" class="login">
@@ -44,7 +45,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
 
 <div id="painel" hidden>
 <header><h1 style="display:flex;align-items:center;gap:10px"><img src="img/logo/monograma-240.png" alt="" style="height:38px">Painel da loja</h1>
-  <nav><button data-aba="agenda" class="ativo">Agenda</button><button data-aba="catalogo">Coleção</button><button data-aba="bloqueios">Folgas</button><button data-aba="gabi">Perguntas <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
+  <nav><button data-aba="agenda" class="ativo">Agenda</button><button data-aba="financeiro">Financeiro</button><button data-aba="catalogo">Coleção</button><button data-aba="bloqueios">Folgas</button><button data-aba="gabi">Perguntas <span id="n-perg"></span></button><button id="sair">Sair</button></nav>
 </header>
 <main>
   <section id="aba-agenda">
@@ -77,6 +78,7 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--creme);ver
     <table><thead><tr><th>Peça</th><th>Categoria</th><th>Tamanhos</th><th>Ações</th></tr></thead><tbody id="tb-cat"></tbody></table>
   </section>
 
+  <section id="aba-financeiro" hidden></section>
   <section id="aba-gabi" hidden>
     <p>Perguntas que clientes fizeram e a assistente <b>não soube responder</b>. Use para criar novas respostas em <code>data/config.json, na parte "faq"</code>.</p>
     <div class="barra"><button class="btn leve" id="limpar-perg">Limpar lista</button></div>
@@ -119,10 +121,11 @@ async function entrar() {
 }
 document.querySelectorAll('nav [data-aba]').forEach(b => b.onclick = () => {
   document.querySelectorAll('nav [data-aba]').forEach(x => x.classList.toggle('ativo', x === b));
-  ['agenda','catalogo','bloqueios','gabi'].forEach(a => $('#aba-' + a).hidden = a !== b.dataset.aba);
+  ['agenda','financeiro','catalogo','bloqueios','gabi'].forEach(a => $('#aba-' + a).hidden = a !== b.dataset.aba);
   if (b.dataset.aba === 'catalogo') carregarCatalogo();
   if (b.dataset.aba === 'bloqueios') carregarBloqueios();
   if (b.dataset.aba === 'gabi') carregarPerguntas();
+  if (b.dataset.aba === 'financeiro') FIN.abrir();
 });
 
 // ---------- agenda ----------
@@ -162,10 +165,11 @@ function renderAgenda() {
     <td data-l="Status"><span class="st ${a.status}">${a.status}</span></td>
     <td data-l="Ações"><div class="acoes">
       <a target="_blank" href="https://wa.me/55${a.telefone.replace(/^55/, '')}?text=${encodeURIComponent(msg(a))}">${a.data === somaDias(1) ? 'Lembrete' : 'WhatsApp'}</a>
-      ${['confirmado','concluido','fechou','faltou','cancelado'].filter(s => s !== a.status).map(s => `<button data-id="${a.id}" data-s="${s}">${s}</button>`).join('')}
+      ${a.status === 'fechou' ? `<button data-contrato="${a.id}">criar contrato</button>` : ''}${['confirmado','concluido','fechou','faltou','cancelado'].filter(s => s !== a.status).map(s => `<button data-id="${a.id}" data-s="${s}">${s}</button>`).join('')}
     </div></td></tr>`).join('') : '<tr><td colspan="6" class="vazio">Nenhum agendamento neste filtro.</td></tr>';
 }
 $('#tb-agenda').onclick = async e => {
+  if (e.target.dataset.contrato) return finNovoContrato(agenda.find(x => x.id === e.target.dataset.contrato));
   const b = e.target.closest('button[data-s]'); if (!b) return;
   if (b.dataset.s === 'cancelado' && !confirm('Cancelar este agendamento? O horário volta a ficar livre no site.')) return;
   await api('/api/admin/agendamentos/' + b.dataset.id, { method: 'PATCH', body: JSON.stringify({ status: b.dataset.s }) });
@@ -211,5 +215,6 @@ $('#lista-bloq').onclick = async e => { const d = e.target.dataset.desb; if (!d)
 
 if (token) entrar();
 </script>
+<script src="js/financeiro.js"></script>
 </body>
 </html>

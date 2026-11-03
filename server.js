@@ -73,7 +73,7 @@ function send(res, status, body, headers = {}) {
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
-    req.on('data', c => { data += c; if (data.length > 1e6) { reject(new Error('payload')); req.destroy(); } });
+    req.on('data', c => { data += c; if (data.length > 8e6) { reject(new Error('payload')); req.destroy(); } });
     req.on('end', () => { try { resolve(data ? JSON.parse(data) : {}); } catch { reject(new Error('json')); } });
   });
 }
@@ -208,6 +208,7 @@ async function api(req, res, url) {
     return send(res, 200, { token });
   }
   if (p.startsWith('/api/admin/') && !isAdmin(req)) return send(res, 401, { erro: 'Não autorizado' });
+  if (await financeiro(req, res, url)) return;
 
   if (p === '/api/admin/agendamentos' && m === 'GET') {
     const all = load('agendamentos.json', []).sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
@@ -266,6 +267,8 @@ async function api(req, res, url) {
 
   return send(res, 404, { erro: 'Rota não encontrada' });
 }
+
+const financeiro = require('./financeiro')({ load, save, send, readBody, clean, todayISO });
 
 // ---------- arquivos estáticos ----------
 function serveStatic(req, res, url) {
