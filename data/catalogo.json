@@ -17,6 +17,25 @@
     "ativo": true
   },
   {
+    "id": "real-lirio",
+    "nome": "Lírio",
+    "categoria": "Noivas",
+    "estilo": "Evasê em cetim com cauda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Cetim encorpado com bordado de pérolas e canutilhos em ramos, decote coração, alças duplas de pérolas caídas nos ombros e cauda longa e fluida.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/lirio-1-card.webp",
+    "fotos": [
+      "img/vestidos/lirio-1.webp",
+      "img/vestidos/lirio-2.webp",
+      "img/vestidos/lirio-3.webp",
+      "img/vestidos/lirio-4.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
     "id": "real-celeste",
     "nome": "Celeste",
     "categoria": "Noivas",
@@ -193,11 +212,14 @@
     "estilo": "Princesa em renda",
     "tamanhos": "Consulte na loja",
     "cor": "Branco",
-    "descricao": "Renda guipir aplicada sobre tule, mangas longas transparentes, decote ilusion e cauda com barrado de renda recortada.",
+    "descricao": "Renda guipir aplicada sobre tule, mangas longas transparentes, decote ilusion e saia ampla com cauda longa de barrado rendado.",
     "modalidade": "Aluguel ou venda",
-    "imagem": "img/vestidos/renda-imperial-3-card.webp",
+    "imagem": "img/vestidos/renda-imperial-4-card.webp",
     "fotos": [
+      "img/vestidos/renda-imperial-4.webp",
       "img/vestidos/renda-imperial-3.webp",
+      "img/vestidos/renda-imperial-5.webp",
+      "img/vestidos/renda-imperial-6.webp",
       "img/vestidos/renda-imperial-1.webp",
       "img/vestidos/renda-imperial-2.webp"
     ],
