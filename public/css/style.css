@@ -340,3 +340,12 @@ input,select,textarea{border:1px solid var(--rose-forte);background:#fff}
   .galeria{grid-template-columns:repeat(2,1fr);gap:10px}
 }
 h1 em{display:block}
+
+/* nosso espaço */
+.espaco{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:center;max-width:1180px;margin:0 auto}
+.espaco figure{margin:0}
+.espaco img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:18px;box-shadow:0 24px 50px rgba(176,86,111,.2)}
+.espaco p{color:var(--suave)}
+.espaco .sobretitulo::after{margin-left:0}
+@media (max-width:860px){.espaco{grid-template-columns:1fr}.espaco img{aspect-ratio:4/5}}
+.espaco img{max-height:560px}@media (min-width:861px){.espaco{grid-template-columns:minmax(0,420px) minmax(0,1fr)}}

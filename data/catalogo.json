@@ -1,5 +1,153 @@
 [
   {
+    "id": "real-realeza",
+    "nome": "Realeza",
+    "categoria": "Noivas",
+    "estilo": "Princesa em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Renda floral em toda a saia, decote ombro a ombro com aplicações e cauda longa rendada. Clássico absoluto para cerimônia na igreja.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/imperial-1-card.webp",
+    "fotos": [
+      "img/vestidos/imperial-1.webp",
+      "img/vestidos/imperial-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-celeste",
+    "nome": "Celeste",
+    "categoria": "Noivas",
+    "estilo": "Sereia tomara que caia",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpete coração em renda com broche de cristais na cintura e saia sereia em tule com apliques de renda até a cauda.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/celeste-1-card.webp",
+    "fotos": [
+      "img/vestidos/celeste-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-elisa",
+    "nome": "Elisa",
+    "categoria": "Noivas",
+    "estilo": "Evasê ombro a ombro",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Renda guipir do decote à barra, mangas curtinhas caídas nos ombros e cauda longa com acabamento recortado.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/elisa-1-card.webp",
+    "fotos": [
+      "img/vestidos/elisa-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-sofia",
+    "nome": "Sofia",
+    "categoria": "Noivas",
+    "estilo": "Sereia com costas em renda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Sereia em renda com alças rendadas, costas em tule transparente com aplicações e fileira de botões forrados.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/sofia-1-card.webp",
+    "fotos": [
+      "img/vestidos/sofia-1.webp",
+      "img/vestidos/sofia-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-encanto",
+    "nome": "Encanto",
+    "categoria": "Noivas",
+    "estilo": "Princesa com brilho",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpete tomara que caia com pedrarias e saia de baile em tule com brilho suave. Uma entrada de princesa.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/encanto-1-card.webp",
+    "fotos": [
+      "img/vestidos/encanto-1.webp",
+      "img/vestidos/encanto-2.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-bella",
+    "nome": "Bella",
+    "categoria": "Noivas",
+    "estilo": "Evasê em renda com cauda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Renda bordada com mangas curtinhas e decote ombro a ombro, saia evasê e cauda longa com barrado de renda.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/bella-1-card.webp",
+    "fotos": [
+      "img/vestidos/bella-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-graciosa",
+    "nome": "Graciosa",
+    "categoria": "Noivas",
+    "estilo": "Renda com mangas · plus size",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Renda floral com mangas transparentes rendadas, decote canoa e modelagem confortável para noivas plus size.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/graciosa-1-card.webp",
+    "fotos": [
+      "img/vestidos/graciosa-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-jardim-noturno",
+    "nome": "Jardim Noturno",
+    "categoria": "Noivas",
+    "estilo": "Princesa leve em tule",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpete em renda com decote V e mangas curtas, saia fluida em tule com apliques florais. Ideal para casamento ao ar livre.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/jardim-noturno-2-card.webp",
+    "fotos": [
+      "img/vestidos/jardim-noturno-2.webp",
+      "img/vestidos/jardim-noturno-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-estrela",
+    "nome": "Estrela",
+    "categoria": "Noivas",
+    "estilo": "Princesa com mangas bordadas",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Mangas longas e costas em tule bordado com micro pérolas e cristais, botões forrados e laço escultural na cintura.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/estrela-1-card.webp",
+    "fotos": [
+      "img/vestidos/estrela-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
     "id": "real-perola",
     "nome": "Pérola",
     "categoria": "Noivas",
@@ -88,7 +236,7 @@
       "img/vestidos/catedral-1.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-cinderela",
@@ -105,7 +253,7 @@
       "img/vestidos/cinderela-2.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-luz",
@@ -122,7 +270,7 @@
       "img/vestidos/luz-2.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-graca",
@@ -138,7 +286,7 @@
       "img/vestidos/graca-1.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-charme",
@@ -154,7 +302,7 @@
       "img/vestidos/charme-1.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-jardim",
@@ -171,7 +319,7 @@
       "img/vestidos/jardim-2.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false
   },
   {
     "id": "real-lavanda",
