@@ -96,6 +96,7 @@
     "imagem": "img/vestidos/encanto-1-card.webp",
     "fotos": [
       "img/vestidos/encanto-1.webp",
+      "img/vestidos/encanto-3.webp",
       "img/vestidos/encanto-2.webp"
     ],
     "destaque": true,
@@ -162,6 +163,22 @@
     "imagem": "img/vestidos/estrela-1-card.webp",
     "fotos": [
       "img/vestidos/estrela-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true
+  },
+  {
+    "id": "real-catedral",
+    "nome": "Catedral",
+    "categoria": "Noivas",
+    "estilo": "Evasê em renda com mangas",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Corpo em renda com decote V e mangas longas, saia fluida de tule e véu catedral com apliques de renda. Feito para a cerimônia na igreja.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/catedral-2-card.webp",
+    "fotos": [
+      "img/vestidos/catedral-2.webp"
     ],
     "destaque": true,
     "ativo": true
@@ -243,22 +260,6 @@
     ],
     "destaque": true,
     "ativo": true
-  },
-  {
-    "id": "real-catedral",
-    "nome": "Catedral",
-    "categoria": "Noivas",
-    "estilo": "Clássico com véu catedral",
-    "tamanhos": "Consulte na loja",
-    "cor": "Off-white",
-    "descricao": "Corpo em renda com decote V e mangas, saia fluida de tule e véu catedral longo com aplicações de renda. Elegância para cerimônia na igreja.",
-    "modalidade": "Aluguel ou venda",
-    "imagem": "img/vestidos/catedral-1-card.webp",
-    "fotos": [
-      "img/vestidos/catedral-1.webp"
-    ],
-    "destaque": true,
-    "ativo": false
   },
   {
     "id": "real-cinderela",
