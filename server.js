@@ -32,6 +32,8 @@ if (DATA !== SEED) {
     let fotosNovas = 0;
     for (const sd of seed) {
       const it = atual.find(i => i.id === sd.id);
+      // peça revisada no código (rev maior): substitui a versão salva
+      if (it && (sd.rev || 0) > (it.rev || 0)) { Object.assign(it, sd); fotosNovas++; continue; }
       if (!it || !Array.isArray(sd.fotos)) continue;
       const faltam = sd.fotos.filter(f => !(it.fotos || []).includes(f));
       if (faltam.length) { it.fotos = [...(it.fotos || []), ...faltam]; fotosNovas += faltam.length; }

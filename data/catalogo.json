@@ -17,6 +17,26 @@
     "ativo": true
   },
   {
+    "id": "real-perola",
+    "nome": "Pérola",
+    "categoria": "Noivas",
+    "estilo": "Evasê em cetim com cauda",
+    "tamanhos": "Consulte na loja",
+    "cor": "Off-white",
+    "descricao": "Cetim encorpado com bordado de pérolas e canutilhos em ramos, decote coração, alças duplas de pérolas caídas nos ombros e cauda longa e fluida.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/lirio-1-card.webp",
+    "fotos": [
+      "img/vestidos/lirio-1.webp",
+      "img/vestidos/lirio-2.webp",
+      "img/vestidos/lirio-3.webp",
+      "img/vestidos/lirio-4.webp"
+    ],
+    "destaque": true,
+    "ativo": true,
+    "rev": 2
+  },
+  {
     "id": "real-lirio",
     "nome": "Lírio",
     "categoria": "Noivas",
@@ -33,7 +53,8 @@
       "img/vestidos/lirio-4.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false,
+    "rev": 2
   },
   {
     "id": "real-celeste",
@@ -152,6 +173,23 @@
     "ativo": true
   },
   {
+    "id": "real-majestade",
+    "nome": "Majestade",
+    "categoria": "Noivas",
+    "estilo": "Princesa com mangas bordadas",
+    "tamanhos": "Consulte na loja",
+    "cor": "Branco",
+    "descricao": "Mangas longas e costas em tule bordado com micro pérolas e cristais, botões forrados e laço escultural na cintura.",
+    "modalidade": "Aluguel ou venda",
+    "imagem": "img/vestidos/estrela-1-card.webp",
+    "fotos": [
+      "img/vestidos/estrela-1.webp"
+    ],
+    "destaque": true,
+    "ativo": true,
+    "rev": 2
+  },
+  {
     "id": "real-estrela",
     "nome": "Estrela",
     "categoria": "Noivas",
@@ -165,7 +203,8 @@
       "img/vestidos/estrela-1.webp"
     ],
     "destaque": true,
-    "ativo": true
+    "ativo": false,
+    "rev": 2
   },
   {
     "id": "real-catedral",
@@ -179,45 +218,6 @@
     "imagem": "img/vestidos/catedral-2-card.webp",
     "fotos": [
       "img/vestidos/catedral-2.webp"
-    ],
-    "destaque": true,
-    "ativo": true
-  },
-  {
-    "id": "real-perola",
-    "nome": "Pérola",
-    "categoria": "Noivas",
-    "estilo": "Evasê com cauda",
-    "tamanhos": "Consulte na loja",
-    "cor": "Off-white",
-    "descricao": "Cetim encorpado com bordado de pérolas e canutilhos descendo pela saia, decote coração e alças duplas de pérolas caídas no ombro. Cauda elegante.",
-    "modalidade": "Aluguel ou venda",
-    "imagem": "img/vestidos/perola-1-card.webp",
-    "fotos": [
-      "img/vestidos/perola-1.webp",
-      "img/vestidos/perola-3.webp",
-      "img/vestidos/perola-7.webp",
-      "img/vestidos/perola-5.webp",
-      "img/vestidos/perola-4.webp",
-      "img/vestidos/perola-2.webp",
-      "img/vestidos/perola-6.webp"
-    ],
-    "destaque": true,
-    "ativo": true
-  },
-  {
-    "id": "real-majestade",
-    "nome": "Majestade",
-    "categoria": "Noivas",
-    "estilo": "Princesa",
-    "tamanhos": "Consulte na loja",
-    "cor": "Branco",
-    "descricao": "Costas em tule transparente totalmente bordadas com pérolas e botões forrados, mangas longas e saia de organza volumosa com cauda longa. Entrada de princesa.",
-    "modalidade": "Aluguel ou venda",
-    "imagem": "img/vestidos/majestade-1-card.webp",
-    "fotos": [
-      "img/vestidos/majestade-1.webp",
-      "img/vestidos/majestade-2.webp"
     ],
     "destaque": true,
     "ativo": true

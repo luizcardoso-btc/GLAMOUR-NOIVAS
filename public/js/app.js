@@ -4,6 +4,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const ICONES = {"vestido": "<path d=\"M9 3h6l-1 4 3 3-1 2 5 9H3l5-9-1-2 3-3z\"/>", "coroa": "<path d=\"M3 18l1.5-10 5 5L12 5l2.5 8 5-5L21 18z\"/><path d=\"M3 21h18\"/>", "paleto": "<path d=\"M8 3l4 4 4-4 4 2 1 16H3L4 5z\"/><path d=\"M12 7v14M9.5 12h-2M12 7l-2 5 2 2 2-2-2-5\"/>", "joia": "<path d=\"M6 3h12l3 6-9 12L3 9z\"/><path d=\"M3 9h18M9 3l3 18 3-18\"/>", "laco": "<path d=\"M12 11c-3-5-9-6-9-2s6 4 9 2zm0 0c3-5 9-6 9-2s-6 4-9 2z\"/><path d=\"M12 11l-4 10M12 11l4 10\"/>", "agulha": "<path d=\"M20 4L6 18\"/><ellipse cx=\"18\" cy=\"6\" rx=\"1\" ry=\"2.2\" transform=\"rotate(45 18 6)\"/><path d=\"M6 18c-2 1-3 2-3 3M14 3c-4 0-6 3-5 6s5 4 4 8-5 4-8 3\"/>"};
 const CORACAO_OFF = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
 const CORACAO_ON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
+const preenchido = v => v && !/consulte|^-$|^—$/i.test(String(v).trim());
 const App = { config: null, catalogo: [], favoritos: new Set(JSON.parse(localStorage.getItem('gn-favs') || '[]')) };
 window.GN = App;
 
@@ -21,11 +22,13 @@ App.whatsLink = whatsLink;
 
 async function init() {
   const [config, catalogo] = await Promise.all([fetch('/api/config').then(r => r.json()), fetch('/api/catalogo').then(r => r.json())]);
-  App.config = config; App.catalogo = catalogo;
+  App.config = config; App.catalogo = catalogo.filter(i => i.imagem || (i.fotos || []).length); // só peças com foto
   const l = config.loja;
 
   $('#lista-servicos').innerHTML = config.servicos.map(s => `<article class="servico"><div class="ic">${ICONES[s.icone] ? `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${ICONES[s.icone]}</svg>` : ''}</div><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p></article>`).join('');
-  $('#depoimentos').innerHTML = config.depoimentos.map(d => `<blockquote>“${esc(d.texto)}”<cite>${esc(d.nome)} · ${esc(d.evento)}</cite></blockquote>`).join('');
+  const deps = config.depoimentos.filter(d => d.texto && !/substitua/i.test(d.texto));
+  if (!deps.length) $('#depoimentos').closest('section').hidden = true;
+  $('#depoimentos').innerHTML = deps.map(d => `<blockquote>“${esc(d.texto)}”<cite>${esc(d.nome)} · ${esc(d.evento)}</cite></blockquote>`).join('');
   $('#lista-faq').innerHTML = config.faq.map(f => `<details><summary>${esc(f.pergunta)}</summary><p>${esc(App.preencher(f.resposta))}</p></details>`).join('');
   $('#rod-endereco').textContent = l.endereco;
   $('#rod-horario').textContent = l.horarioTexto;
@@ -89,7 +92,7 @@ function renderCatalogo(cat) {
         <h3>${esc(i.nome)}</h3>
         <div class="meta">${esc(i.categoria)} · ${esc(i.estilo)}</div>
         <p>${esc(i.descricao)}</p>
-        <div class="tam">Tamanhos: ${esc(i.tamanhos)} · ${esc(i.cor)}<br>${esc(i.modalidade)}</div>
+        <div class="tam">${[preenchido(i.tamanhos) ? 'Tamanhos: ' + esc(i.tamanhos) : '', preenchido(i.cor) ? esc(i.cor) : ''].filter(Boolean).join(' · ')}${preenchido(i.modalidade) ? `<br>${esc(i.modalidade)}` : ''}</div>
         <button class="provar" data-id="${esc(i.id)}">Quero provar este modelo</button>
       </div>
     </article>`).join('') : '<p class="sub">Nenhum favorito por enquanto. Toque no coração dos modelos que encantarem você.</p>';
